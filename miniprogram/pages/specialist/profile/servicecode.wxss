@@ -1,61 +1,17 @@
-.container {
-  min-height: 100vh;
-  background-color: #ffffff; /* 改为纯白色背景 */
-  padding: 40rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* 修改为居中对齐 */
-  box-sizing: border-box;
-}
-
-.qrcode-container {
-  background-color: #ffffff;
-  border-radius: 16rpx;
-  padding: 40rpx;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
-}
-
-.qrcode {
-  width: 500rpx; /* 稍微增大二维码尺寸 */
-  height: 500rpx;
-  margin: 0 0 100rpx 0; /* 调整上下边距，底部留出空间给按钮 */
-}
-
-.share-btn {
-  width: 80%; /* 按钮宽度调整为80% */
-  background-color: #07c160;
-  color: #ffffff;
-  font-size: 32rpx;
-  padding: 20rpx 0;
-  border-radius: 14rpx;
-  /* 移除margin-top: auto，避免按钮贴底 */
-}
-
-.share-btn:active {
-  opacity: 0.8;
-}
-
-.share-btn:active {
-  opacity: 0.8;
-}
-
-/* 标题栏 */
+/* 导航栏样式 */
 .custom-nav-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 160rpx;
-  background-color: #ffffff;
+  height: 260rpx;
+  background-color: #f8f8f8;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   z-index: 1000;
   padding: 0 32rpx;
+  box-shadow: 0 0rpx 0rpx rgba(0, 0, 0, 0.05);
 }
 
 .nav-left {
@@ -63,6 +19,7 @@
   height: 60rpx;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .back-icon {
@@ -74,15 +31,64 @@
 }
 
 .nav-title {
-  flex: 1;
-  text-align: center;
   font-size: 34rpx;
   font-weight: 500;
   color: #333;
 }
 
-/* 确保容器有适当的顶部边距 */
+/* 主容器样式 */
 .container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   box-sizing: border-box;
+  padding: 0 40rpx;
+  padding-top: 176rpx;
+}
+
+/* 二维码容器样式 */
+.qrcode-container {
+  background-color: #f8f8f8;
+  border-radius: 24rpx;
+  padding: 280rpx;
   width: 100%;
+  margin-top: 180rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0rpx 0rpx rgba(0, 0, 0, 0.08);
+}
+
+.qrcode {
+  width: 400rpx;
+  height: 400rpx;
+  margin-bottom: 40rpx;
+  border-radius: 16rpx;
+}
+
+.tip {
+  font-size: 28rpx;
+  color: #888;
+  margin-top: 20rpx;
+}
+
+/* 分享按钮样式 */
+.share-btn {
+  width: 90%;
+  background-color: #07c160;
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: 500;
+  padding: 10rpx 0;
+  border-radius: 20rpx;
+  margin-top: 60rpx;
+  box-shadow: 0 8rpx 16rpx rgba(7, 193, 96, 0.2);
+  transition: all 0.3s ease;
+}
+
+.share-btn:active {
+  opacity: 0.8;
+  transform: scale(0.98);
 }

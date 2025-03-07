@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="close-btn" bindtap="handleCancel">
+    <view class="close-icon">×</view>
+  </view>
+  
+  <view wx:if="{{isLoading}}" class="loading">
+    <view class="loading-spinner"></view>
+  </view>
+  
+  <block wx:else>
+    <view class="content">
+      <image class="avatar" src="{{specialistAvatar}}" mode="aspectFill"></image>
+      
+      <view class="title">
+        是否绑定<text class="highlight">{{specialistName}}</text>为我的管理师？
+      </view>
+      
+      <view class="description">
+        为获得更好的真人服务，绑定后您的体脂检测结果将与管理师进行同步
+      </view>
+    </view>
+    
+    <button class="confirm-btn" bindtap="handleConfirm">同意绑定</button>
+  </block>
+</view>

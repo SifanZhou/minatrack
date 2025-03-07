@@ -4,11 +4,19 @@ const errorHandler = require('../../../services/error');
 
 Page({
   data: {
-    isLoading: false
+    isLoading: false,
+    inviteCode: '' // 添加邀请码字段
   },
 
-  onLoad: function() {
+  onLoad: function(options) {
     console.log('登录页面加载');
+    
+    // 保存邀请码参数
+    if (options.inviteCode) {
+      this.setData({ inviteCode: options.inviteCode });
+      // 保存到本地存储，以防页面重载丢失
+      wx.setStorageSync('pendingInviteCode', options.inviteCode);
+    }
     
     // 获取系统信息
     try {
@@ -57,7 +65,7 @@ Page({
           name: 'user',
           data: {
             action: 'login',
-            type: 'user',  // 添加类型标识
+            type: 'user',
             userInfo: {
               nickName: userInfo.nickName,
               avatarUrl: userInfo.avatarUrl,
@@ -66,7 +74,8 @@ Page({
               province: userInfo.province,
               city: userInfo.city,
               language: userInfo.language
-            }
+            },
+            inviteCode: this.data.inviteCode || wx.getStorageSync('pendingInviteCode') // 添加邀请码
           },
           success: (result) => {
             try {
@@ -78,12 +87,11 @@ Page({
     
               if (result.result.success) {
                 const userData = result.result.data;
-                if (!userData) {
-                  throw new Error('用户数据为空');
-                }
-    
                 wx.setStorageSync('userData', userData);
                 wx.hideLoading();
+                
+                // 清除临时存储的邀请码
+                wx.removeStorageSync('pendingInviteCode');
                 
                 if (userData.profile && userData.profile.height) {
                   wx.reLaunch({
@@ -91,11 +99,9 @@ Page({
                   });
                 } else {
                   wx.navigateTo({
-                    url: '/pages/user/auth/register'
+                    url: `/pages/user/auth/register?inviteCode=${this.data.inviteCode}`
                   });
                 }
-              } else {
-                throw new Error(result.result.error || '登录失败');
               }
             } catch (e) {
               console.error('处理登录结果出错:', e);

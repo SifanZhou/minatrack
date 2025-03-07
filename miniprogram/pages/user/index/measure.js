@@ -107,6 +107,11 @@ Page({
   
   // 头像点击处理
   handleAvatarTap: function() {
+    // 如果正在测量中，不响应点击事件
+    if (this.data.isMeasuring) {
+      return;
+    }
+    
     console.log('头像被点击');
     wx.navigateTo({
       url: '/pages/user/profile/profile'

@@ -47,21 +47,38 @@ Page({
   getMenuList(isSubscribed) {
     const list = [
       {
-        text: '会员订阅',
-        action: 'showSubscribeInfo',  // 无论是否订阅，都使用同一个方法
-        rightText: isSubscribed ? `${this.data.nextRenewalDate}续期` : '',
-        showButton: !isSubscribed
+        text: '邀请客户绑定',  // 修改文本，使其更清晰
+        action: 'navigateToServiceCode'
       }
     ];
     
-    if (isSubscribed) {
-      list.push({
-        text: '邀请客户绑定',
-        action: 'navigateToServiceCode'
-      });
-    }
+    // 暂时隐藏订阅功能
+    // {
+    //   text: '会员订阅',
+    //   action: 'showSubscribeInfo',
+    //   rightText: isSubscribed ? `${this.data.nextRenewalDate}续期` : '',
+    //   showButton: !isSubscribed
+    // }
     
     return list;
+  },
+
+  onLoad() {
+    // 使用新的API替代已弃用的wx.getSystemInfoSync
+    const systemInfo = {
+      ...wx.getDeviceInfo(),
+      ...wx.getWindowInfo(),
+      ...wx.getAppBaseInfo()
+    };
+    this.setData({
+      statusBarHeight: systemInfo.statusBarHeight,
+      // 默认设置为已订阅状态，这样所有功能都可用
+      isSubscribed: true,
+      menuList: this.getMenuList(true)
+    });
+    
+    // 不再检查订阅状态
+    // this.checkSubscription();
   },
 
   showSubscribeInfo() {
