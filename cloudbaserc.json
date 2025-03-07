@@ -1,0 +1,30 @@
+{
+  "envId": "minatrack-0gee1z7vf57df583",
+  "functionRoot": "cloudfunctions",
+  "functions": [
+    {
+      "name": "user",
+      "timeout": 5,
+      "runtime": "Nodejs12.16",
+      "memorySize": 128
+    },
+    {
+      "name": "system",
+      "timeout": 5,
+      "runtime": "Nodejs12.16",
+      "memorySize": 128
+    },
+    {
+      "name": "device",
+      "timeout": 5,
+      "runtime": "Nodejs12.16",
+      "memorySize": 128
+    },
+    {
+      "name": "specialist",
+      "timeout": 5,
+      "runtime": "Nodejs12.16",
+      "memorySize": 128
+    }
+  ]
+}

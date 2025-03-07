@@ -1,0 +1,8 @@
+<view class="container">
+  <button 
+    class="login-btn {{isLoading ? 'disabled' : ''}}" 
+    bindtap="getSpecialistProfile" 
+    disabled="{{isLoading}}">
+    {{isLoading ? '登录中...' : '微信一键登录'}}
+  </button>
+</view>

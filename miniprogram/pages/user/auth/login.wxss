@@ -1,0 +1,46 @@
+/* 主容器样式：占满整个屏幕高度，居中显示内容 */
+.container {
+  height: 100vh;         /* 微调：可调整容器高度，100vh表示视口高度 */
+  display: flex;         /* 使用弹性布局 */
+  align-items: center;   /* 微调：垂直居中对齐，可改为flex-start或flex-end */
+  justify-content: center; /* 微调：水平居中对齐，可改为flex-start或flex-end */
+  padding: 40rpx;        /* 微调：四周内边距，可根据需要调整 */
+  box-sizing: border-box; /* 确保内边距不会增加元素总宽度 */
+  background-color: #fff; /* 微调：背景颜色，可根据需要更改 */
+}
+
+/* 登录区域样式：包含按钮和提示文字 */
+.login-area {
+  width: 100%;           /* 微调：可调整宽度百分比或使用固定宽度 */
+}
+
+/* 登录按钮样式 */
+.login-btn {
+  width: 100%;           /* 微调：按钮宽度，可调整为固定宽度或百分比 */
+  height: 100rpx;        /* 微调：按钮高度，可根据需要调整 */
+  display: flex;         /* 使用弹性布局使内容居中 */
+  align-items: center;   /* 垂直居中文字 */
+  justify-content: center; /* 水平居中文字 */
+  background-color: #07c160; /* 微调：按钮背景色，微信绿 */
+  color: #fff;           /* 微调：按钮文字颜色 */
+  font-size: 36rpx;      /* 微调：按钮文字大小 */
+  border-radius: 16rpx;  /* 微调：按钮圆角大小 */
+  margin-bottom: 30rpx;  /* 微调：与下方元素的间距 */
+}
+
+/* 按钮点击效果 */
+.btn-hover {
+  opacity: 0.9;          /* 微调：点击时的透明度，可调整为0-1之间的值 */
+}
+
+/* 隐私提示文字样式 */
+.privacy-tip {
+  font-size: 26rpx;      /* 微调：文字大小，可根据需要调整 */
+  color: #999;           /* 微调：文字颜色，灰色 */
+  text-align: center;    /* 微调：文字对齐方式，可改为left或right */
+}
+
+/* 链接样式 */
+.link {
+  color: #07c160;        /* 微调：链接文字颜色，微信绿 */
+}

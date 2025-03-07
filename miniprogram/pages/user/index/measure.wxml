@@ -1,0 +1,99 @@
+<view class="container">
+  <view class="header">
+    <!-- 检测记录按钮 -->
+    <view class="back-btn" bindtap="handleHistoryTap">
+      <view class="back-arrow"></view>
+      <view class="back-arrow"></view>
+      <view class="back-arrow"></view>
+    </view>
+    
+    <!-- 头像容器 - 修改图片路径并添加默认显示 -->
+    <view class="avatar-container" bindtap="handleAvatarTap" hover-class="avatar-hover">
+      <image wx:if="{{userInfo.avatarUrl}}" class="avatar" src="{{userInfo.avatarUrl}}"></image>
+      <view wx:else class="avatar default-avatar"></view>
+    </view>
+  </view>
+
+  <!-- 其余部分保持不变 -->
+  <view class="weight-section">
+    <view class="weight-display">
+      <text class="weight-number">{{weight}}</text>
+      <text class="unit">kg</text>
+    </view>
+    
+    <view class="hint-text {{isReportReady ? 'measurement-complete' : ''}} {{connectError ? 'hint-error' : ''}} {{isHintMeasuring ? 'hint-measuring' : ''}}">
+      {{hintText}}
+    </view>
+  </view>
+
+  <view 
+    class="btn-area {{status === 'measuring' ? 'measuring' : ''}} {{status === 'ready' ? 'report-ready' : ''}}" 
+    hover-class="{{status !== 'measuring' ? 'btn-area-hover' : ''}}"
+    bindtap="handleBtnTap"
+    data-status="{{status}}"
+  >
+    {{buttonText}}
+  </view>
+</view>
+
+<view class="container">
+  <view class="header">
+    <!-- 删除这里的返回按钮 -->
+    <!-- <view class="back-btn" bindtap="navigateToHistory">
+      <view class="back-arrow"></view>
+      <view class="back-arrow"></view>
+      <view class="back-arrow"></view>
+    </view> -->
+    
+    <!-- 保留头像部分 -->
+    <view class="avatar-container" hover-class="avatar-hover" hover-stay-time="100">
+      <view class="default-avatar" wx:if="{{!userInfo.avatarUrl}}">
+        <text>{{userInfo.nickName[0] || '用'}}</text>
+      </view>
+      <image wx:else src="{{userInfo.avatarUrl}}" mode="aspectFill" style="width:100%;height:100%;"></image>
+    </view>
+  </view>
+  
+  <!-- 其他内容保持不变 -->
+</view>
+
+<!-- 保持现有代码不变 -->
+
+<!-- 设备列表弹窗 -->
+<view class="device-popup {{showDeviceList ? 'device-popup-show' : ''}}">
+  <view class="device-popup-mask" bindtap="handleCloseDeviceList"></view>
+  <view class="device-popup-content">
+    <view class="device-popup-header">
+      <text class="device-popup-title">选择设备</text>
+      <view class="device-popup-close" bindtap="handleCloseDeviceList"></view>
+    </view>
+    
+    <view class="device-list">
+      <view wx:if="{{searching}}" class="device-searching">
+        <view class="loading-icon"></view>
+        <text>搜索设备中...</text>
+      </view>
+      
+      <view wx:elif="{{devices.length === 0}}" class="device-empty">
+        <text>未找到设备</text>
+      </view>
+      
+      <view wx:else class="device-items">
+        <view 
+          wx:for="{{devices}}" 
+          wx:key="id" 
+          class="device-item"
+          bindtap="handleDeviceSelect"
+          data-id="{{item.id}}"
+        >
+          <view class="device-info">
+            <text class="device-name">{{item.name}}</text>
+            <text class="device-signal">信号强度: {{item.rssi}}dBm</text>
+          </view>
+          <view class="device-arrow"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 移除设备列表弹窗代码 -->

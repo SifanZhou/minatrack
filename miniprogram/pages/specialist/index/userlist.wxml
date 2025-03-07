@@ -1,0 +1,61 @@
+<view class="container">
+  <!-- 内容区域 -->
+  <scroll-view class="client-list" scroll-y refresher-enabled="{{true}}" 
+    refresher-triggered="{{isRefreshing}}" bindrefresherrefresh="onRefresh">
+    
+    <!-- 删除了筛选状态提示 -->
+    
+    <!-- 测试按钮 -->
+    <view class="test-controls">
+      <button class="test-btn add" bindtap="addTestClient">添加测试客户</button>
+      <button class="test-btn clear" bindtap="clearTestClients">清空数据</button>
+    </view>
+
+    <!-- 客户列表 -->
+    <block wx:if="{{clients.length > 0}}">
+      <view wx:for="{{clients}}" wx:key="id" class="client-item" bindtap="viewClientDetail" data-id="{{item.id}}">
+        <view class="client-left">
+          <image class="client-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+          <text class="client-name">{{item.name}}</text>
+        </view>
+        <view class="client-right">
+          <text class="last-check">{{item.lastCheck}}</text>
+          <view class="client-status {{item.status}}">
+            <text wx:if="{{item.status === 'normal'}}">正常</text>
+            <text wx:elif="{{item.status === 'warning'}}">警告</text>
+            <text wx:elif="{{item.status === 'danger'}}">危险</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 空状态 -->
+    <view wx:else class="empty-state">
+      <text>暂无客户数据</text>
+    </view>
+  </scroll-view>
+  <!-- 在列表底部添加加载状态 -->
+  <view class="loading-state" wx:if="{{isLoading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more-data" wx:if="{{noMoreData}}">
+    <text>没有更多数据了</text>
+  </view>
+</view>
+```
+然后修改 userlist.wxml 文件，添加头像到自定义标题栏：
+```xml
+<!-- 自定义标题栏 -->
+<view class="custom-nav-bar" style="padding-top: {{statusBarHeight}}px;">
+  <view class="nav-left" bindtap="navigateToProfile">
+    <image class="user-avatar" src="{{userAvatar}}" mode="aspectFill"></image>
+  </view>
+  <view class="nav-title">客户({{clients.length}})</view>
+  <view class="nav-right"></view>
+</view>
+
+<!-- 其他内容保持不变 -->
+<view class="container" style="padding-top: {{statusBarHeight + 44}}px;">
+  <!-- 现有内容 -->
+  <!-- ... -->
+</view>

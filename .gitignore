@@ -1,0 +1,13 @@
+# 微信小程序特定文件
+miniprogram_npm/
+node_modules/
+.DS_Store
+project.private.config.json
+
+# 开发工具配置
+.idea/
+.vscode/
+
+# 临时文件
+*.log
+*.tmp

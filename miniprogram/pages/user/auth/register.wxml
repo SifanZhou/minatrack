@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="form">
+    <view class="form-item">
+      <text class="label">性别</text>
+      <picker mode="selector" range="{{genderRange}}" value="{{genderIndex}}" bindchange="bindGenderChange" acceleration="{{true}}">
+        <view class="value">
+          <text>{{genderRange[genderIndex]}}</text>
+          <text class="arrow">⟩</text>
+        </view>
+      </picker>
+    </view>
+    
+    <view class="form-item">
+      <text class="label">年龄</text>
+      <picker mode="selector" range="{{ageRange}}" value="{{ageIndex}}" bindchange="bindAgeChange" acceleration="{{true}}">
+        <view class="value">
+          <text>{{ageRange[ageIndex]}}岁</text>
+          <text class="arrow">⟩</text>
+        </view>
+      </picker>
+    </view>
+    
+    <view class="form-item">
+      <text class="label">身高</text>
+      <picker mode="selector" range="{{heightRange}}" value="{{heightIndex}}" bindchange="bindHeightChange" acceleration="{{true}}">
+        <view class="value">
+          <text>{{heightRange[heightIndex]}}cm</text>
+          <text class="arrow">⟩</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+  
+  <view class="btn-wrapper">
+    <button class="submit-btn {{!formComplete ? 'disabled' : ''}}" disabled="{{!formComplete}}" bindtap="handleSubmit">完成</button>
+  </view>
+</view>

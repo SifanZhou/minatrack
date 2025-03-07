@@ -1,0 +1,12 @@
+{
+  "name": "system",
+  "version": "2.0.0",
+  "description": "系统相关云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  },
+  "devDependencies": {
+    "miniprogram-api-typings": "^4.0.5"
+  }
+}

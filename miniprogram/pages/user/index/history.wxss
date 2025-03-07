@@ -1,0 +1,80 @@
+/* 设置整个页面的背景色为白色 */
+page {
+  background-color: #fff;
+}
+
+/* 容器样式：占满整个视口高度，垂直排列子元素 */
+.container {
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 120rpx;
+  box-sizing: border-box;
+}
+
+/* 记录列表容器样式 */
+.record-list {
+  flex: 1;
+  width: 100%;
+  padding-top: 20rpx; /* 添加顶部间距 */
+}
+
+/* 单条记录项样式 */
+/* 微调：可通过调整 padding 来改变记录项内边距 */
+.record-item {
+  display: flex;
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中 */
+  padding: 40rpx; /* 内边距 */
+  border-bottom: 1rpx solid #f5f5f5; /* 底部分隔线 */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 体重数值样式 */
+/* 微调：可通过调整 font-size 和 font-weight 来改变数字大小和粗细 */
+.weight {
+  font-size: 80rpx; /* 文字大小 */
+  color: #333; /* 文字颜色 */
+  font-weight: 200; /* 文字粗细 */
+  display: flex; /* 使用弹性布局 */
+  align-items: flex-end; /* 底部对齐 */
+}
+
+/* 体重单位样式 */
+.weight-unit {
+  font-size: 0rpx; /* 单位文字大小 */
+  color: #999; /* 单位文字颜色 */
+  margin-left: 8rpx; /* 与数字的间距 */
+  margin-bottom: 12rpx; /* 底部微调，使其与数字底部对齐 */
+  font-weight: 200; /* 单位文字粗细 */
+}
+
+/* 时间文本样式 */
+/* 微调：可通过调整 font-size、color 和 font-weight 来改变时间文本外观 */
+.time {
+  font-size: 32rpx; /* 文字大小 */
+  color: #999; /* 文字颜色 */
+  font-weight: 200; /* 文字粗细，可以调整为200-900之间的值 */
+  display: flex;
+  align-items: center;
+}
+
+/* 箭头图标样式 */
+/* 微调：可通过调整 margin-left 和 color 来改变箭头位置和颜色 */
+/* 箭头图标样式 - 使用Unicode字符 */
+.arrow {
+  margin-left: 24rpx; /* 与时间文本的间距 */
+  color: #ccc; /* 箭头颜色 */
+  font-size: 32rpx; /* 调大一些以适应新的箭头符号 */
+}
+
+/* 空记录提示样式 */
+/* 微调：可通过调整 padding 和 font-size 来改变提示文本位置和大小 */
+.empty-tip {
+  text-align: center;
+  color: #999; /* 文字颜色 */
+  font-size: 28rpx; /* 文字大小 */
+  padding: 100rpx 0; /* 上下内边距 */
+}

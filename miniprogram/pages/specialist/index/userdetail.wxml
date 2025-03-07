@@ -1,0 +1,54 @@
+<!-- 自定义标题栏 -->
+<view class="custom-nav-bar" style="padding-top: {{statusBarHeight}}rpx;">
+  <view class="nav-left" bindtap="handleBack">
+    <view class="back-icon"></view>
+  </view>
+  <view class="nav-title">客户记录</view>
+  <view style="width: 60rpx;"></view>
+</view>
+
+<!-- 客户信息卡片 -->
+<view class="client-info">
+  <image class="avatar" src="{{clientInfo.avatar}}" mode="aspectFill"></image>
+  <view class="client-data">
+    <text class="client-name">{{clientInfo.name}}</text>
+    <view class="client-meta">
+      <text>{{clientInfo.gender}}</text>
+      <text>{{clientInfo.age}}岁</text>
+      <text>{{clientInfo.height}}cm</text>
+    </view>
+  </view>
+</view>
+
+<!-- 记录列表 -->
+<scroll-view 
+  class="record-scroll" 
+  scroll-y="true" 
+  refresher-enabled="true"
+  refresher-threshold="50"
+  refresher-default-style="black"
+  refresher-background="#f7f8fa"
+  refresher-triggered="{{isRefreshing}}"
+  bindrefresherrefresh="onRefresh">
+  <!-- 删除了记录标题 -->
+  <view class="record-list">
+    <!-- 记录列表项 -->
+    <view class="record-item" wx:for="{{records}}" wx:key="index">
+      <view class="record-data">
+        <view class="data-item">
+          <text class="label">体重</text>
+          <text class="value">{{item.weight}}kg</text>
+        </view>
+        <view class="data-item">
+          <text class="label">体脂率</text>
+          <text class="value">{{item.bodyFat}}%</text>
+        </view>
+      </view>
+      <view class="record-date">
+        <text class="date">{{item.date}}</text>
+      </view>
+    </view>
+    <view class="empty-tip" wx:if="{{records.length === 0}}">暂无检测记录</view>
+  </view>
+  <view class="list-footer"></view>
+</scroll-view>

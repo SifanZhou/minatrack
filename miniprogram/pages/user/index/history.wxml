@@ -1,0 +1,17 @@
+<view class="container">
+  <view class="record-list">
+    <block wx:if="{{measurements && measurements.length > 0}}">
+      <view wx:for="{{measurements}}" wx:key="_id" class="record-item" bindtap="navigateToDetail" data-id="{{item._id}}">
+        <view class="weight">
+          {{item.weight}} 
+          <text class="weight-unit">kg</text>
+        </view>
+        <view class="time">
+          {{item.relativeTime || '刚刚'}}
+          <text class="arrow">⟩</text>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty-tip">没有更多记录了</view>
+  </view>
+</view>

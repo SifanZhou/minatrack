@@ -1,0 +1,12 @@
+<view class="container">
+  <view class="login-area">
+    <button 
+      class="login-btn" 
+      bindtap="getUserProfile"
+      hover-class="btn-hover"
+    >
+      微信一键登录
+    </button>
+    <view class="privacy-tip">登录即表示同意<text class="link" bindtap="showPrivacy">用户协议与隐私政策</text></view>
+  </view>
+</view>

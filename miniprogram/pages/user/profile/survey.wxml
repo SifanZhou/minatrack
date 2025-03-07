@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="user-info">
+    <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+    <text class="nickname">{{userInfo.nickName}}</text>
+  </view>
+
+  <view class="section">
+    <view class="section-title">个人信息</view>
+    <view class="list">
+      <view class="list-item" bindtap="editProfile">
+        <text class="label">身高</text>
+        <view class="value">
+          <text>{{userProfile.height}}cm</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+      
+      <view class="list-item" bindtap="editProfile">
+        <text class="label">年龄</text>
+        <view class="value">
+          <text>{{userProfile.age}}岁</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+      
+      <view class="list-item" bindtap="editProfile">
+        <text class="label">性别</text>
+        <view class="value">
+          <text>{{userProfile.gender === 'male' ? '男' : '女'}}</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="logout-btn" bindtap="handleLogout">退出登录</button>
+  </view>
+</view>

@@ -1,0 +1,184 @@
+/* 主容器样式：占满整个屏幕高度，垂直排列元素 
+   微调：可通过调整 padding 来改变整体内边距 */
+.container {
+  min-height: 100vh; /* 最小高度占满屏幕 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff; /* 背景色 */
+  padding: 40rpx; /* 四周内边距，可调整 */
+  box-sizing: border-box;
+}
+
+/* 顶部区域样式：包含返回按钮和头像 
+   微调：可通过调整 height 和 margin-bottom 来改变顶部区域大小和与下方内容的重叠程度 */
+.header {
+  width: 100%;
+  height: 380rpx; /* 顶部区域高度，可调整 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: -100rpx; /* 负值使头像与下方内容重叠，可调整 */
+  position: relative;
+}
+
+/* 确保头像容器样式正确 */
+.avatar-container {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+/* 默认头像样式 */
+.default-avatar {
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+/* 头像点击效果 
+   微调：可通过调整 opacity 和 transform 来改变点击效果 */
+.avatar-hover {
+  opacity: 0.5; /* 透明度，可调整 */
+  transform: scale(0.95); /* 缩放比例，可调整 */
+}
+
+/* 体重显示区域样式（重复定义，会覆盖前面的） 
+   微调：可通过调整 margin-top 和 justify-content 来改变位置和对齐方式 */
+.weight-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* 垂直居中 */
+  margin-top: -320rpx;  /* 向上偏移，可调整 */
+}
+
+/* 体重数字和单位的容器 
+   微调：可通过调整 margin-bottom 来改变与下方提示文字的距离 */
+.weight-display {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 32rpx; /* 与下方提示文字的距离，可调整 */
+}
+
+/* 体重数字样式 
+   微调：可通过调整 font-size 和 font-weight 来改变数字大小和粗细 */
+.weight-number {
+  font-size: 240rpx; /* 数字大小，可调整 */
+  color: #000; /* 数字颜色 */
+  font-weight: 500; /* 字重，可调整 */
+  line-height: 1;
+  font-family: 'DIN Alternate', 'Arial', sans-serif; /* 添加数字专用字体 */
+  letter-spacing: -4rpx; /* 调整字符间距，使数字更紧凑 */
+}
+
+/* 单位样式：kg 
+   微调：可通过调整 font-size、margin-left、margin-top 和 font-weight 来改变单位大小、位置和粗细 */
+.unit {
+  font-size: 40rpx; /* 单位大小，可调整 */
+  color: #999; /* 单位颜色 */
+  margin-left: 14rpx; /* 与数字的水平距离，可调整 */
+  margin-top: 96rpx; /* 垂直位置，可调整 */
+  font-weight: 200; /* 字重，可调整（200-900） */
+  font-family: 'DIN Alternate', 'Arial', sans-serif; /* 与体重数字相同的字体 */
+}
+
+/* 提示文本样式：如"请光脚上秤" 
+   微调：可通过调整 font-size、padding 和 border-radius 来改变文字大小、内边距和圆角 */
+.hint-text {
+  font-size: 32rpx; /* 文字大小，可调整 */
+  color: #666; /* 文字颜色 */
+  background: #f5f5f5; /* 背景色 */
+  padding: 10rpx 32rpx; /* 上下、左右内边距，可调整 */
+  border-radius: 12rpx; /* 圆角大小，可调整 */
+  transition: all 0.3s ease;
+}
+
+/* 添加错误提示样式：连接失败等情况 
+   微调：可通过调整背景色和文字颜色来改变错误提示样式 */
+.hint-error {
+  background: #ffebeb !important; /* 错误背景色 */
+  color: #e64340 !important; /* 错误文字颜色 */
+}
+
+/* 添加测量中提示样式：请保持静止等提示 */
+.hint-measuring {
+  background: #fff9e6 !important; /* 黄色背景 */
+  color: #ff9900 !important; /* 文字颜色 */
+  font-weight: 500; /* 加粗显示 */
+}
+
+/* 底部按钮区域样式：固定在底部的区域，作为大按钮使用 
+   微调：可通过调整高度和内边距来改变按钮大小 */
+/* 底部按钮区域样式 */
+.btn-area {
+  /* 固定定位，始终在屏幕底部 */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* 确保宽度占满 */
+  
+  /* 使用flex布局使内容居中 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 设置高度和内边距 */
+  min-height: 200rpx;
+  padding: 30rpx 0; /* 移除左右内边距 */
+  margin: 0; /* 确保没有外边距 */
+  
+  /* 视觉样式 */
+  background-color: #000;
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: 200;
+  
+  /* 其他效果 */
+  box-shadow: 0 -4rpx 10rpx rgba(0, 0, 0, 0.03);
+  z-index: 100;
+  transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* 更平滑的过渡效果 */
+  box-sizing: border-box;
+  transform: translateY(0); /* 初始位置 */
+}
+
+/* 底部区域点击态 */
+.btn-area-hover {
+  background-color: #333;
+  color: #fff;
+  transform: translateY(6rpx); /* 按下时向下移动 */
+  box-shadow: 0 -2rpx 5rpx rgba(0, 0, 0, 0.02); /* 减小阴影 */
+  transition: all 0.2s ease; /* 按下时快速响应 */
+}
+
+/* 不同状态下的底部按钮样式 */
+.btn-area.measuring {
+  background-color: #cccccc;
+  color: #999;
+  box-shadow: none;
+  transform: translateY(6rpx); /* 测量中保持按下状态 */
+  transition: all 0.2s ease; /* 按下时快速响应 */
+}
+
+.btn-area.report-ready {
+  background-color: #07c160; /* 报告就绪状态背景色 */
+  transform: translateY(0); /* 恢复原位置 */
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.5s ease; /* 弹性缓动效果 */
+}
+
+/* 报告就绪状态的点击效果 */
+.btn-area.report-ready.btn-area-hover {
+  background-color: #06a954; /* 深一点的绿色 */
+  transform: translateY(6rpx); /* 点击时下移 */
+  transition: all 0.2s ease; /* 按下时快速响应 */
+}
+/* 保持现有样式不变 */

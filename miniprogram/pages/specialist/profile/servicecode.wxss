@@ -1,0 +1,88 @@
+.container {
+  min-height: 100vh;
+  background-color: #ffffff; /* 改为纯白色背景 */
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* 修改为居中对齐 */
+  box-sizing: border-box;
+}
+
+.qrcode-container {
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.qrcode {
+  width: 500rpx; /* 稍微增大二维码尺寸 */
+  height: 500rpx;
+  margin: 0 0 100rpx 0; /* 调整上下边距，底部留出空间给按钮 */
+}
+
+.share-btn {
+  width: 80%; /* 按钮宽度调整为80% */
+  background-color: #07c160;
+  color: #ffffff;
+  font-size: 32rpx;
+  padding: 20rpx 0;
+  border-radius: 14rpx;
+  /* 移除margin-top: auto，避免按钮贴底 */
+}
+
+.share-btn:active {
+  opacity: 0.8;
+}
+
+.share-btn:active {
+  opacity: 0.8;
+}
+
+/* 标题栏 */
+.custom-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 160rpx;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 32rpx;
+}
+
+.nav-left {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+}
+
+.back-icon {
+  width: 24rpx;
+  height: 24rpx;
+  border-top: 4rpx solid #333;
+  border-left: 4rpx solid #333;
+  transform: rotate(-45deg);
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 确保容器有适当的顶部边距 */
+.container {
+  box-sizing: border-box;
+  width: 100%;
+}

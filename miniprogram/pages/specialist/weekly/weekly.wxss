@@ -1,0 +1,99 @@
+/* 整体容器样式，设置为全屏高度，垂直排列元素 */
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  position: relative;
+}
+
+/* 内容区域样式 */
+.content {
+  flex: 1;
+  padding: 160rpx;
+  margin-top: 0rpx; /* 修改为0，不需要为自定义导航栏留空间 */
+  padding-bottom: 100rpx; /* 为原生tabBar留出空间 */
+}
+
+/* 统计卡片样式，设置背景色、圆角、内边距、阴影等 */
+.stats-card {
+  background: #fff; /* 卡片背景色 */
+  border-radius: 12rpx; /* 卡片圆角 */
+  padding: 24rpx; /* 卡片内边距 */
+  margin-bottom: 20rpx; /* 卡片底部外边距 */
+  box-shadow: 0 0rpx 0rpx rgba(0, 0, 0, 0.05); /* 卡片阴影效果 */
+}
+
+/* 统计卡片标题样式 */
+.stats-title {
+  font-size: 32rpx; /* 标题字体大小 */
+  font-weight: 500; /* 标题字体粗细 */
+  margin-bottom: 20rpx; /* 标题底部外边距 */
+  color: #333; /* 标题文字颜色 */
+}
+
+/* 统计网格布局，使用CSS Grid设置为两列 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 两列等宽布局 */
+  gap: 20rpx; /* 网格间距 */
+}
+
+/* 统计项样式，设置背景色、内边距、圆角等 */
+.stats-item {
+  background: #f8f9fa; /* 统计项背景色 */
+  padding: 80rpx; /* 统计项内边距 */
+  border-radius: 20rpx; /* 统计项圆角 */
+  text-align: center; /* 文字居中 */
+}
+
+/* 统计数字样式，设置字体大小、粗细、颜色等 */
+.stats-number {
+  font-size: 80rpx; /* 数字字体大小 */
+  font-weight: bold; /* 数字字体粗细 */
+  color: #000; /* 数字颜色，黑色 */
+  margin-bottom: 8rpx; /* 数字底部外边距 */
+}
+
+/* 为不同类型的统计项添加自定义颜色 */
+.decrease-significant .stats-number {
+  color: #07c160; /* 下降明显 - 绿色 */
+}
+
+.decrease-slightly .stats-number {
+  color: #999; /* 轻微下降 - 蓝色 */
+}
+
+.stable .stats-number {
+  color: #999; /* 体脂持平 - 灰色 */
+}
+
+.increase .stats-number {
+  color: #fa5151; /* 体脂上升 - 红色 */
+}
+
+/* 统计标签样式，设置字体大小和颜色 */
+.stats-label {
+  font-size: 24rpx; /* 标签字体大小 */
+  color: #666; /* 标签文字颜色 */
+}
+
+/* 风险警告卡片样式 */
+.warning-card {
+  background: #fff; /* 警告卡片背景色 */
+}
+
+/* 警告数字样式，设置颜色为橙色 */
+.warning-number {
+  color: #ffa000; /* 警告数字颜色，橙色 */
+}
+
+/* 异常上升警告颜色 */
+.abnormal-increase .stats-number {
+  color: #fa5151; /* 异常上升 - 红色 */
+}
+
+/* 未更新数据警告颜色 */
+.outdated-data .stats-number {
+  color: #ffa000; /* 未更新数据 - 橙色 */
+}

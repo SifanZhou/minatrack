@@ -1,0 +1,15 @@
+{
+  "name": "minatrack",
+  "version": "1.0.0",
+  "description": "MinaTrack健康管理小程序",
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.2",
+    "@types/node": "^22.13.5",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.2.6"
+  }
+}

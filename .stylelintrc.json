@@ -1,0 +1,18 @@
+{
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "selector-type-no-unknown": [true, {
+        "ignoreTypes": ["page", "scroll-view", "swiper", "view", "text", "button"]
+      }],
+      "no-duplicate-selectors": null,
+      "no-empty-source": true,
+      "no-descending-specificity": null,
+      "unit-no-unknown": [true, {
+        "ignoreUnits": ["rpx"]
+      }],
+      "property-no-unknown": [true, {
+        "ignoreProperties": ["line-clamp"]
+      }],
+      "declaration-property-value-no-unknown": null
+    }
+  }

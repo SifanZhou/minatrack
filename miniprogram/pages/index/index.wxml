@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="role-selection">
+    <view class="role-title">请选择您的身份</view>
+    <view class="role-options">
+      <view class="role-card" bindtap="navigateToUserLogin">
+        <view class="role-icon">👤</view>
+        <view class="role-name">我是用户</view>
+        <view class="role-desc">记录体脂数据，追踪健康变化</view>
+      </view>
+      
+      <view class="role-card" bindtap="navigateToAdminLogin">
+        <view class="role-icon">👩🏻‍💼</view>
+        <view class="role-name">我是管理师</view>
+        <view class="role-desc">管理客户，提供专业服务</view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="footer">
+    <view class="copyright">© 2025 米娜健康助手</view>
+  </view>
+</view>

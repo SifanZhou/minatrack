@@ -1,0 +1,50 @@
+<view class="container">
+  <!-- 内容区域 -->
+  <scroll-view 
+    class="content" 
+    scroll-y 
+    refresher-enabled="{{true}}"
+    refresher-triggered="{{isRefreshing}}"
+    bindrefresherrefresh="onRefresh">
+    
+    <!-- 体脂变化统计 -->
+    <view class="stats-card">
+      <view class="stats-title">体脂变化统计</view>
+      <view class="stats-grid">
+        <view class="stats-item decrease-significant" bindtap="navigateToStatsList" data-type="decreaseSignificant" data-title="下降明显">
+          <view class="stats-number">{{fatChangeStats.decreaseSignificant}}</view>
+          <view class="stats-label">下降明显</view>
+        </view>
+        <view class="stats-item decrease-slightly" bindtap="navigateToStatsList" data-type="decreaseSlightly" data-title="轻微下降">
+          <view class="stats-number">{{fatChangeStats.decreaseSlightly}}</view>
+          <view class="stats-label">轻微下降</view>
+        </view>
+        <view class="stats-item stable" bindtap="navigateToStatsList" data-type="stable" data-title="体脂持平">
+          <view class="stats-number">{{fatChangeStats.stable}}</view>
+          <view class="stats-label">体脂持平</view>
+        </view>
+        <view class="stats-item increase" bindtap="navigateToStatsList" data-type="increase" data-title="体脂上升">
+          <view class="stats-number">{{fatChangeStats.increase}}</view>
+          <view class="stats-label">体脂上升</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 风险预警 -->
+    <view class="stats-card warning-card">
+      <view class="stats-title">风险预警</view>
+      <view class="stats-grid">
+        <view class="stats-item abnormal-increase" bindtap="navigateToStatsList" data-type="abnormalIncrease" data-title="数据异常上升">
+          <view class="stats-number">{{riskWarningStats.abnormalIncrease}}</view>
+          <view class="stats-label">数据异常上升</view>
+        </view>
+        <view class="stats-item outdated-data" bindtap="navigateToStatsList" data-type="outdatedData" data-title="未更新数据">
+          <view class="stats-number">{{riskWarningStats.outdatedData}}</view>
+          <view class="stats-label">未更新数据</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  
+  <!-- 删除自定义的底部导航栏 -->
+</view>

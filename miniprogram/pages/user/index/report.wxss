@@ -1,0 +1,211 @@
+/* 容器样式优化 */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+  /* 增加顶部内边距，为自定义导航栏留出空间 */
+  padding-top: 120rpx; 
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  background-color: #f8f8f8;
+}
+
+/* 自定义导航栏 */
+.custom-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90rpx;
+  padding-top: env(safe-area-inset-top); /* 适配刘海屏 */
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.nav-title {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 报告头部样式优化 */
+.report-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40rpx; /* 增加底部间距 */
+}
+
+.date-time {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 30rpx;
+}
+
+/* 主数据区域样式优化 */
+.main-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-color: #fff; /* 添加背景色 */
+  padding: 30rpx;        /* 添加内边距 */
+  border-radius: 12rpx;  /* 圆角 */
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.03); /* 轻微阴影 */
+}
+
+/* 体重显示区域 */
+.weight-box {
+  display: flex;
+  align-items: baseline;
+}
+
+.weight-box .value {
+  font-size: 72rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 体脂率显示区域 */
+.bodyfat-box {
+  display: flex;
+  align-items: baseline;
+}
+
+.bodyfat-box .value {
+  font-size: 56rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.unit {
+  font-size: 28rpx;
+  color: #666;
+  margin-left: 8rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #666;
+  margin-left: 16rpx;
+}
+
+/* 详细数据区域 */
+.detail-box {
+  margin-top: 30rpx;
+}
+
+/* 数据部分样式优化 */
+.data-section {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.03); /* 轻微阴影 */
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0; /* 更淡的分隔线 */
+}
+
+.data-item:last-child {
+  border-bottom: none;
+}
+
+/* 标签和值的样式优化 */
+.label {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.value {
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 备注区域样式优化 */
+.note-section {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.03); /* 轻微阴影 */
+}
+
+.section-title {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: 500; /* 加粗标题 */
+}
+
+.note-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 底部按钮区域样式优化 */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30rpx 40rpx calc(30rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: 20rpx;
+}
+
+/* 完成按钮样式优化 */
+.action-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 14rpx; /* 修改为14rpx圆角 */
+  font-size: 32rpx;
+  font-weight: 500;
+  text-align: center; /* 确保文字水平居中 */
+  display: flex;      /* 使用flex布局实现完全居中 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+}
+
+/* 完成按钮样式 */
+.save {
+  background-color: #07c160;
+  color: #fff;
+}
+
+/* 分享按钮样式 */
+.share {
+  background-color: #1aad19;
+  color: #fff;
+}
+
+/* 返回按钮样式 */
+.back {
+  background-color: #f8f8f8;
+  color: #333;
+  border: 2rpx solid #eee;
+}
+
+/* 加载中和错误提示样式 */
+.loading, .error {
+  text-align: center;
+  padding: 40rpx;
+  color: #999;
+  margin-top: 100rpx; /* 增加顶部间距 */
+}
+
+.error {
+  font-size: 28rpx;
+}

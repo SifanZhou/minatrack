@@ -1,0 +1,96 @@
+<!-- 自定义标题栏 -->
+<view class="custom-nav-bar" style="padding-top: {{statusBarHeight}}px;">
+  <view class="nav-left" bindtap="handleClose">
+    <view class="close-icon"></view>
+  </view>
+  <view class="nav-title">个人资料</view>
+  <view style="width: 30px;"></view>
+</view>
+
+<view class="container">
+  <view class="user-info">
+    <image class="avatar" src="{{userInfo.avatar}}" mode="aspectFill"></image>
+    <view class="info">
+      <text class="name">{{userInfo.name}}</text>
+      <text class="title">{{userInfo.title}}</text>
+    </view>
+  </view>
+
+  <view class="menu-list">
+    <view class="menu-item" wx:for="{{menuList}}" wx:key="text" bindtap="{{item.action}}">
+      <text>{{item.text}}</text>
+      <block wx:if="{{item.showButton}}">
+        <button class="subscribe-btn">开通会员</button>
+      </block>
+      <block wx:elif="{{item.rightText}}">
+        <text class="renewal-date">{{item.rightText}}</text>
+      </block>
+      <block wx:else>
+        <view class="arrow"></view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 在退出登录按钮上方添加取消订阅按钮 -->
+  <block wx:if="{{isSubscribed}}">
+    <view class="cancel-subscribe-button" bindtap="cancelSubscription">取消订阅</view>
+  </block>
+  <view class="logout-button" bindtap="logout">退出登录</view>
+
+  <!-- 会员订阅弹窗 -->
+  <view class="subscribe-popup {{showSubscribePopup ? 'show' : ''}}" bindtap="hideSubscribePopup">
+    <view class="popup-content" catchtap="stopPropagation">
+      <view class="popup-title">开通会员</view>
+      <view class="popup-desc">
+        <view class="desc-item">• 专属二维码邀请客户</view>
+        <view class="desc-item">• 无限量客户管理</view>
+        <view class="desc-item">• 数据统计分析</view>
+      </view>
+      <view class="price-section">
+        <text class="price-label">会员价格</text>
+        <text class="price">¥365</text>
+        <text class="price-unit">/年</text>
+      </view>
+      <button class="pay-btn" bindtap="handleSubscribe">立即开通</button>
+    </view>
+  </view>
+
+  <!-- 取消订阅弹窗 -->
+  <view class="subscribe-popup {{showCancelPopup ? 'show' : ''}}" bindtap="hideCancelPopup">
+    <view class="popup-content" catchtap="stopPropagation">
+      <view class="popup-title">会员订阅</view>
+      <view class="popup-desc">
+        <view class="desc-item">• 当前会员有效期至: {{nextRenewalDate}}</view>
+        <view class="desc-item">• 取消订阅后将无法使用会员功能</view>
+      </view>
+      <button class="cancel-btn" bindtap="cancelSubscription">取消订阅</button>
+    </view>
+  </view>
+</view>
+
+<!-- 订阅弹窗 -->
+<view class="popup-mask" wx:if="{{showSubscribePopup}}" bindtap="hideSubscribePopup">
+  <view class="popup-content" catchtap="stopPropagation">
+    <!-- 弹窗内容 -->
+  </view>
+</view>
+
+<!-- 取消订阅弹窗 -->
+<view class="popup-mask" wx:if="{{showCancelPopup}}" bindtap="hideCancelPopup">
+  <view class="popup-content" catchtap="stopPropagation">
+    <!-- 弹窗内容 -->
+  </view>
+</view>
+
+<!-- 删除这些重复的弹窗 -->
+<!-- 
+<view class="popup-mask" wx:if="{{showSubscribePopup}}" bindtap="hideSubscribePopup">
+  <view class="popup-content" catchtap="stopPropagation">
+  </view>
+</view>
+
+<view class="popup-mask" wx:if="{{showCancelPopup}}" bindtap="hideCancelPopup">
+  <view class="popup-content" catchtap="stopPropagation">
+  </view>
+</view>
+-->

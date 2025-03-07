@@ -1,0 +1,191 @@
+/* 顶部导航栏 - 固定在页面顶部 */
+.custom-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 160rpx;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  z-index: 1000; /* 确保在其他元素上层 */
+  padding: 0 50rpx;
+}
+
+/* 导航栏左侧按钮容器 */
+.nav-left {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+}
+
+/* 返回箭头图标 - 使用边框构建 */
+.back-icon {
+  width: 24rpx;
+  height: 24rpx;
+  border-top: 4rpx solid #333;
+  border-left: 4rpx solid #333;
+  transform: rotate(-45deg); /* 旋转形成箭头形状 */
+}
+
+/* 导航栏标题 */
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 主容器 - 设置基础布局 */
+.container {
+  min-height: 100vh;
+  background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: calc(88rpx + var(--status-bar-height)); /* 适配不同机型状态栏 */
+}
+
+/* 客户信息卡片 - 固定在导航栏下方 */
+.client-info {
+  background: #fff;
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+  /* 移除阴影效果 */
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  top: calc(160rpx + var(--status-bar-height, 40rpx));
+  left: 0;
+  z-index: 10;
+  height: 160rpx; /* 固定高度确保布局稳定 */
+}
+
+/* 客户头像 */
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+/* 客户信息容器 */
+.client-data {
+  flex: 1;
+}
+
+/* 客户姓名 */
+.client-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+/* 客户基础信息 */
+.client-meta {
+  color: #666;
+  font-size: 28rpx;
+}
+
+/* 客户信息间隔 */
+.client-meta text {
+  margin-right: 20rpx;
+}
+
+/* 记录列表滚动区域 - 固定位置可滚动 */
+.record-scroll {
+  flex: 1;
+  background: #ffffff; /* 改为白色背景 */
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  position: fixed;
+  top: calc(160rpx + var(--status-bar-height, 40rpx) + 160rpx);
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* 记录列表容器 */
+.record-list {
+  background: #fff;
+  width: 100%;
+  margin-top: 0; /* 确保没有顶部间距 */
+}
+
+/* 记录项 - 单条记录的容器 */
+.record-item {
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 记录日期容器 */
+.record-date {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 日期文本 */
+.date {
+  font-size: 30rpx;
+  color: #999; /* 改为灰色 */
+  margin-bottom: 8rpx;
+  font-weight: normal; /* 改为普通字重 */
+}
+
+/* 时间文本 */
+.time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 记录数据容器 */
+.record-data {
+  display: flex;
+}
+
+/* 数据项 - 体重/体脂等单个指标 */
+.data-item {
+  margin-left: 40rpx;
+  text-align: center;
+}
+
+/* 数据标签 */
+.label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+/* 数据值 */
+.value {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 空数据提示 */
+.empty-tip {
+  padding: 60rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 列表底部留白 */
+.list-footer {
+  height: 200rpx;
+  background: #f7f8fa;
+}

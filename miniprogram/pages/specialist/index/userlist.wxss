@@ -1,0 +1,180 @@
+/* 页面容器 - 设置整体布局结构 */
+.container {
+  height: 100vh; /* 设置高度为视口高度 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 子元素垂直排列 */
+  background-color: #f7f7f7; /* 设置背景色为浅灰色 */
+  position: relative; /* 相对定位，作为子元素定位参考 */
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-top: calc(88rpx + var(--status-bar-height, 40rpx)); /* 为标题栏预留空间 */
+}
+
+/* 客户列表滚动区域 - 设置列表容器样式 */
+.client-list {
+  height: 100%; /* 占满容器高度 */
+  box-sizing: border-box; /* 边框和内边距计入总宽高 */
+  padding-top: 80rpx; /* 顶部添加一些内边距 */
+}
+
+/* 测试功能按钮容器 - 包含添加和清空按钮 */
+.test-controls {
+  display: flex; /* 使用弹性布局 */
+  padding: 20rpx 30rpx; /* 增加内边距 */
+  gap: 20rpx; /* 按钮之间的间距 */
+  margin-bottom: 30rpx; /* 底部外边距 */
+}
+
+/* 测试按钮基本样式 */
+.test-btn {
+  flex: 1; /* 平均分配空间 */
+  font-size: 28rpx; /* 字体大小 */
+  padding: 10rpx 0; /* 上下内边距 */
+  border-radius: 14rpx; /* 圆角 */
+}
+
+/* 添加测试客户按钮 - 绿色按钮 */
+.test-btn.add {
+  background-color: #4caf50; /* 背景色为绿色 */
+  color: white; /* 文本颜色为白色 */
+}
+
+/* 清空数据按钮 - 红色按钮 */
+.test-btn.clear {
+  background-color: #f44336; /* 背景色为红色 */
+  color: white; /* 文本颜色为白色 */
+}
+
+/* 客户项 - 单个客户信息的容器 */
+.client-item {
+  display: flex; /* 使用弹性布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中 */
+  padding: 30rpx 30rpx; /* 内边距 */
+  background-color: #ffffff; /* 背景色为白色 */
+  border-bottom: 1rpx solid #f5f5f5; /* 底部边框 */
+  margin-bottom: 10rpx; /* 底部外边距 */
+  border-radius: 8rpx; /* 圆角 */
+  position: relative; /* 添加相对定位，用于伪元素定位 */
+  overflow: hidden; /* 隐藏溢出内容，确保点击效果不超出边界 */
+}
+
+/* 添加点击态效果 */
+.client-item:active {
+  background-color: #f7f7f7; /* 点击时背景色与应用背景色相同 */
+}
+
+.client-item:active::after {
+  opacity: 1; /* 点击时显示 */
+}
+
+/* 客户左侧区域 - 包含头像和姓名 */
+.client-left {
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中 */
+}
+
+/* 客户头像 - 圆形头像样式 */
+.client-avatar {
+  width: 100rpx; /* 宽度 */
+  height: 100rpx; /* 高度 */
+  border-radius: 50%; /* 圆角，使其呈现为圆形 */
+  margin-right: 20rpx; /* 右侧外边距 */
+  background-color: #f0f0f0; /* 背景色，用于头像加载前显示 */
+}
+
+/* 客户姓名 - 姓名文本样式 */
+.client-name {
+  font-size: 32rpx; /* 字体大小 */
+  color: #333333; /* 文本颜色 */
+  font-weight: 500; /* 字体粗细 */
+}
+
+/* 客户右侧区域 - 包含测量时间和状态 */
+.client-right {
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中 */
+}
+
+/* 最后测量时间 - 时间文本样式 */
+.last-check {
+  font-size: 28rpx; /* 字体大小 */
+  color: #999; /* 文本颜色为浅灰色 */
+  margin-right: 20rpx; /* 右侧外边距 */
+}
+
+/* 客户状态 - 状态标签基本样式 */
+.client-status {
+  padding: 8rpx 16rpx; /* 内边距 */
+  border-radius: 8rpx; /* 圆角 */
+  font-size: 26rpx; /* 字体大小 */
+}
+
+/* 正常状态 - 绿色标签 */
+.client-status.normal {
+  background-color: #e8f5e9; /* 背景色为浅绿色 */
+  color: #4caf50; /* 文本颜色为绿色 */
+}
+
+/* 警告状态 - 黄色标签 */
+.client-status.warning {
+  background-color: #fff8e1; /* 背景色为浅黄色 */
+  color: #ffa000; /* 文本颜色为黄色 */
+}
+
+/* 危险状态 - 红色标签 */
+.client-status.danger {
+  background-color: #ffebee; /* 背景色为浅红色 */
+  color: #f44336; /* 文本颜色为红色 */
+}
+
+/* 空状态 - 当没有客户数据时显示 */
+.empty-state {
+  display: flex; /* 使用弹性布局 */
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  height: 300rpx; /* 高度 */
+  color: #999999; /* 文本颜色为浅灰色 */
+  font-size: 28rpx; /* 字体大小 */
+}
+
+/* 自定义标题栏样式 */
+.custom-nav-bar {
+  position: fixed; /* 固定定位，不随滚动移动 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左侧对齐 */
+  right: 0; /* 右侧对齐 */
+  height: 88rpx; /* 高度，应该改为rpx单位 */
+  background-color: #ffffff; /* 背景色为白色 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: space-between; /* 两端对齐 */
+  z-index: 1000; /* 层级，确保在其他元素上方 */
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1); /* 阴影效果，应该改为rpx单位 */
+  padding-left: 32rpx; /* 左侧内边距，应该改为rpx单位 */
+  padding-right: 32rpx; /* 右侧内边距，应该改为rpx单位 */
+}
+
+.nav-left {
+  width: 60rpx; /* 宽度，应该改为rpx单位 */
+  height: 60rpx; /* 高度，应该改为rpx单位 */
+}
+
+.user-avatar {
+  width: 60rpx; /* 宽度，应该改为rpx单位 */
+  height: 60rpx; /* 高度，应该改为rpx单位 */
+  border-radius: 50%; /* 圆角，使其呈现为圆形 */
+}
+
+.nav-title {
+  font-size: 34rpx; /* 字体大小，应该改为rpx单位 */
+  font-weight: 500; /* 字体粗细 */
+  color: #333333; /* 文本颜色 */
+  flex: 1; /* 占据剩余空间 */
+  text-align: center; /* 文本居中 */
+}
+
+.nav-right {
+  width: 60rpx; /* 宽度，应该改为rpx单位 */
+}
