@@ -14,6 +14,23 @@ Page({
     }
   },
 
+  onShow: function() {
+    // 检查是否需要跳转到个人资料页
+    const redirectToProfile = wx.getStorageSync('redirectToProfile');
+    if (redirectToProfile) {
+      // 清除标记
+      wx.removeStorageSync('redirectToProfile');
+      // 延迟跳转，确保当前页面已完全加载
+      setTimeout(() => {
+        wx.navigateTo({
+          url: '/pages/user/profile/profile'
+        });
+      }, 200);
+    }
+    
+    // 原有的onShow逻辑...
+  },
+
   navigateToUserLogin: function() {
     wx.reLaunch({
       url: '/pages/user/auth/login'

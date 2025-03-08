@@ -1,37 +1,45 @@
 <view class="container">
-  <view class="form">
+  <!-- 添加标题栏 -->
+  <view class="page-title">完善个人资料</view>
+  <view class="page-subtitle">请填写您的基本信息，以便为您提供更准确的服务</view>
+  
+  <form class="form">
+    <!-- 性别选择 -->
     <view class="form-item">
       <text class="label">性别</text>
-      <picker mode="selector" range="{{genderRange}}" value="{{genderIndex}}" bindchange="bindGenderChange" acceleration="{{true}}">
+      <picker bindchange="bindGenderChange" value="{{genderIndex}}" range="{{genderRange}}" class="picker-wrapper">
         <view class="value">
-          <text>{{genderRange[genderIndex]}}</text>
+          {{genderRange[genderIndex]}}
           <text class="arrow">⟩</text>
         </view>
       </picker>
     </view>
     
+    <!-- 年龄选择 -->
     <view class="form-item">
       <text class="label">年龄</text>
-      <picker mode="selector" range="{{ageRange}}" value="{{ageIndex}}" bindchange="bindAgeChange" acceleration="{{true}}">
+      <picker bindchange="bindAgeChange" value="{{ageIndex}}" range="{{ageRange}}" class="picker-wrapper">
         <view class="value">
-          <text>{{ageRange[ageIndex]}}岁</text>
+          {{ageRange[ageIndex]}} 岁
           <text class="arrow">⟩</text>
         </view>
       </picker>
     </view>
     
+    <!-- 身高选择 -->
     <view class="form-item">
       <text class="label">身高</text>
-      <picker mode="selector" range="{{heightRange}}" value="{{heightIndex}}" bindchange="bindHeightChange" acceleration="{{true}}">
+      <picker bindchange="bindHeightChange" value="{{heightIndex}}" range="{{heightRange}}" class="picker-wrapper">
         <view class="value">
-          <text>{{heightRange[heightIndex]}}cm</text>
+          {{heightRange[heightIndex]}} cm
           <text class="arrow">⟩</text>
         </view>
       </picker>
     </view>
-  </view>
+  </form>
   
   <view class="btn-wrapper">
-    <button class="submit-btn {{!formComplete ? 'disabled' : ''}}" disabled="{{!formComplete}}" bindtap="handleSubmit">完成</button>
+    <!-- 确保按钮文本是动态的 -->
+    <button class="submit-btn" bindtap="handleSubmit">{{submitButtonText}}</button>
   </view>
 </view>

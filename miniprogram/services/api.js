@@ -51,6 +51,18 @@ function callFunction(name, data) {
   });
 }
 
+// 在API服务中添加开发环境检测函数
+const isDevTools = () => {
+  try {
+    // 使用新的API组合替代已弃用的wx.getSystemInfoSync
+    const appBaseInfo = wx.getAppBaseInfo();
+    return appBaseInfo.platform === 'devtools';
+  } catch (e) {
+    console.error('获取系统信息失败:', e);
+    return false;
+  }
+};
+
 /**
  * 用户相关API
  */
@@ -106,9 +118,29 @@ const user = {
    * 获取用户信息
    * @returns {Promise} Promise对象
    */
-  getUserInfo() {
-    return callFunction('user', {
-      action: 'profile'  // 使用已存在的 profile action
+  getUserInfo: function() {
+    return new Promise((resolve, reject) => {
+      if (isDevTools()) {
+        // 在开发者工具中返回模拟数据
+        console.log('开发环境，返回模拟用户数据');
+        const mockUserData = wx.getStorageSync('userProfile') || {};
+        resolve(mockUserData);
+        return;
+      }
+      
+      // 真机环境中的正常API调用
+      callFunction('user', {
+        action: 'profile'  // 使用已存在的 profile action
+      })
+      .then(result => {
+        resolve(result);
+      })
+      .catch(err => {
+        console.error('获取用户信息失败:', err);
+        // 失败时返回本地存储的数据作为备选
+        const localUserProfile = wx.getStorageSync('userProfile') || {};
+        resolve(localUserProfile);
+      });
     });
   }
 };

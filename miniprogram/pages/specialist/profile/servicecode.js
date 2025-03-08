@@ -9,41 +9,23 @@ Page({
     isLoading: false
   },
   
-  onLoad() {
-    const systemInfo = {
-      ...wx.getDeviceInfo(),
-      ...wx.getWindowInfo(),
-      ...wx.getAppBaseInfo()
-    };
-    this.setData({
-      statusBarHeight: systemInfo.statusBarHeight
-    });
-    
-    // 检查本地存储中是否有缓存的二维码
-    const cachedQRCode = wx.getStorageSync('specialistQRCode');
-    const cachedInviteCode = wx.getStorageSync('specialistInviteCode');
-    const lastUpdateTime = wx.getStorageSync('qrCodeLastUpdateTime');
-    
-    if (cachedQRCode && cachedInviteCode && lastUpdateTime) {
-      const now = new Date();
-      const lastUpdate = new Date(lastUpdateTime);
-      // 如果缓存的二维码不超过24小时，直接使用
-      if ((now - lastUpdate) < 24 * 60 * 60 * 1000) {
-        this.setData({
-          qrCodeUrl: cachedQRCode,
-          inviteCode: cachedInviteCode,
-          lastUpdateTime
-        });
-        return;
-      }
+  onLoad: function() {
+    try {
+      // 使用新的API替代已弃用的wx.getSystemInfoSync
+      const systemInfo = wx.getWindowInfo();
+      this.setData({
+        statusBarHeight: systemInfo.statusBarHeight
+      });
+    } catch (e) {
+      console.error('获取系统信息失败:', e);
+      // 兼容处理，使用默认值
+      this.setData({
+        statusBarHeight: 20
+      });
     }
-    
-    // 没有缓存或缓存过期，生成新的二维码
-    this.generateQRCode();
   },
 
   // 生成二维码和邀请码
-  // 修改生成二维码的方法
   async generateQRCode() {
     if (this.data.isLoading) return;
     
@@ -54,10 +36,8 @@ Page({
       // 生成随机邀请码（6位数字）
       const inviteCode = Math.floor(100000 + Math.random() * 900000).toString();
       
-      // 生成小程序码URL，直接包含邀请码参数
-      // 使用第三方API生成二维码，扫码后直接跳转到小程序并带上邀请码参数
-      const qrCodeUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + 
-        encodeURIComponent(`https://minatrack.com/invite?code=${inviteCode}`);
+      // 使用小程序自带的接口生成二维码
+      const qrCodeUrl = await this.createQRCode(`https://minatrack.com/invite?code=${inviteCode}`);
       
       const currentTime = new Date().toISOString();
       
@@ -88,6 +68,49 @@ Page({
     }
   },
   
+  // 使用canvas在本地生成二维码
+  createQRCode(content) {
+    return new Promise((resolve, reject) => {
+      try {
+        // 引入QR码生成库
+        const QRCode = require('../../../utils/weapp-qrcode.js');
+        
+        // 获取系统信息以确定合适的二维码大小
+        const systemInfo = wx.getWindowInfo();
+        const qrcodeWidth = 200;
+        
+        // 创建QR码实例
+        const qrcode = new QRCode('qrcode-canvas', {
+          usingIn: this,  // 在组件或页面中使用时需要指定this
+          text: content,
+          width: qrcodeWidth,
+          height: qrcodeWidth,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        
+        // 延迟一下确保二维码已经绘制完成
+        setTimeout(() => {
+          // 将canvas转为图片
+          wx.canvasToTempFilePath({
+            canvasId: 'qrcode-canvas',
+            success: (res) => {
+              resolve(res.tempFilePath);
+            },
+            fail: (err) => {
+              console.error('生成二维码图片失败:', err);
+              reject(err);
+            }
+          }, this);
+        }, 500);
+      } catch (error) {
+        console.error('创建二维码失败:', error);
+        reject(error);
+      }
+    });
+  },
+  
   // 保存邀请码到后端
   async saveInviteCodeToBackend(inviteCode) {
     try {
@@ -109,6 +132,59 @@ Page({
     });
     
     this.generateQRCode();
+  },
+
+  // 保存二维码到相册
+  saveToAlbum() {
+    if (!this.data.qrCodeUrl) {
+      wx.showToast({
+        title: '二维码不存在',
+        icon: 'none'
+      });
+      return;
+    }
+
+    wx.showLoading({
+      title: '保存中...'
+    });
+
+    // 直接保存本地临时文件到相册
+    wx.saveImageToPhotosAlbum({
+      filePath: this.data.qrCodeUrl,
+      success: () => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '已保存到相册',
+          icon: 'success'
+        });
+      },
+      fail: (err) => {
+        wx.hideLoading();
+        console.error('保存到相册失败:', err);
+        // 如果是因为用户拒绝授权导致的失败
+        if (err.errMsg.indexOf('auth deny') >= 0 || err.errMsg.indexOf('authorize') >= 0) {
+          wx.showModal({
+            title: '提示',
+            content: '需要您授权保存图片到相册',
+            confirmText: '去授权',
+            success: (modalRes) => {
+              if (modalRes.confirm) {
+                wx.openSetting({
+                  success: (settingRes) => {
+                    console.log('设置结果:', settingRes);
+                  }
+                });
+              }
+            }
+          });
+        } else {
+          wx.showToast({
+            title: '保存失败',
+            icon: 'none'
+          });
+        }
+      }
+    });
   },
 
   // 分享功能

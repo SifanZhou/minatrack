@@ -33,10 +33,13 @@ Page({
     // 检查是否已登录并完善信息
     const userInfo = wx.getStorageSync('userInfo');
     const userProfile = wx.getStorageSync('userProfile');
+    const userData = wx.getStorageSync('userData');
+    const hasCompletedRegistration = wx.getStorageSync('hasCompletedRegistration');
     
-    if (userInfo && userProfile && userProfile.height) {
+    // 只有当用户信息完整且已完成注册流程时才直接跳转到测量页面
+    if (userInfo && userProfile && userProfile.height && userData && hasCompletedRegistration) {
       wx.reLaunch({
-        url: '/pages/user/index/history'
+        url: '/pages/user/index/measure'
       });
     }
   },
@@ -93,15 +96,22 @@ Page({
                 // 清除临时存储的邀请码
                 wx.removeStorageSync('pendingInviteCode');
                 
-                if (userData.profile && userData.profile.height) {
+                // 检查用户是否已完善资料并且已经完成注册流程
+                const hasCompletedRegistration = wx.getStorageSync('hasCompletedRegistration');
+                if (userData.profile && userData.profile.height && hasCompletedRegistration) {
+                  // 已完善资料且完成注册，保存用户资料并跳转到测量页面
+                  wx.setStorageSync('userProfile', userData.profile);
                   wx.reLaunch({
-                    url: '/pages/user/index/history'
+                    url: '/pages/user/index/measure'
                   });
                 } else {
+                  // 未完善资料或未完成注册流程，跳转到注册页面
                   wx.navigateTo({
-                    url: `/pages/user/auth/register?inviteCode=${this.data.inviteCode}`
+                    url: `/pages/user/auth/register?inviteCode=${this.data.inviteCode || ''}`
                   });
                 }
+              } else {
+                throw new Error(result.result.message || '登录失败');
               }
             } catch (e) {
               console.error('处理登录结果出错:', e);

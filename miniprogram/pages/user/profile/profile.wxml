@@ -1,67 +1,54 @@
 <!-- 自定义导航栏 -->
-<view class="custom-nav-bar" style="padding-top: {{statusBarHeight}}px;">
+<view class="custom-nav-bar">
   <view class="nav-left" bindtap="handleClose">
     <view class="close-icon"></view>
   </view>
-  <view class="nav-title">个人中心</view>
-  <view style="width: 30px;"></view>
+  <view class="nav-title"></view>
 </view>
 
 <view class="container">
-  <!-- 用户信息卡片 -->
-  <view class="user-info">
-    <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
-    <view class="nickname">{{userInfo.nickName || '未登录'}}</view>
+  <!-- 用户信息容器 -->
+  <view class="user-info-container">
+    <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}"></image>
+    <text class="user-nickname">{{userInfo.nickName || '未登录用户'}}</text>
   </view>
   
-  <!-- 我的管理师 -->
-  <view class="trainer-info">
-    <view class="trainer-header">
-      <view class="trainer-title">我的管理师</view>
+  <!-- 第一个列表区域 - 用户功能 -->
+  <view class="list-section">
+    <view class="list-item" bindtap="editBasicInfo">
+      <view class="label">基础信息</view>
+      <view class="arrow">⟩</view>
     </view>
     
-    <view wx:if="{{hasTrainer}}" class="trainer-content">
-      <image class="trainer-avatar" src="{{trainerInfo.avatarUrl || '/images/default-avatar.png'}}"></image>
-      <view class="trainer-info-right">
-        <view class="trainer-name">{{trainerInfo.name}}</view>
-        <view class="trainer-desc">{{trainerInfo.description}}</view>
-      </view>
-    </view>
-    
-    <view wx:else class="no-trainer">
-      <text bindtap="bindTrainer" class="scan-link">扫码绑定管理师</text>，绑定后获得更多专业服务
-    </view>
-  </view>
-
-  <!-- 个人信息 -->
-  <view class="section">
-    <view class="section-title">个人信息</view>
-    <view class="list-item" bindtap="editProfile">
-      <view class="label">基本资料</view>
-      <view class="value">
-        <text>查看/编辑</text>
-        <text class="arrow">⟩</text>
-      </view>
-    </view>
-    <!-- 添加检测记录入口 -->
     <view class="list-item" bindtap="navigateToHistory">
       <view class="label">检测记录</view>
-      <view class="value">
-        <text>查看</text>
-        <text class="arrow">⟩</text>
-      </view>
+      <view class="arrow">⟩</view>
     </view>
-    <view class="list-item" bindtap="healthSurvey">
+    
+    <view class="list-item" bindtap="healthReport">
       <view class="label">健康问卷</view>
+      <view class="arrow">⟩</view>
+    </view>
+  </view>
+  
+  <!-- 第二个列表区域 - 管理师信息 -->
+  <view class="list-section">
+    <view class="list-item" bindtap="bindTrainer" wx:if="{{!hasTrainer}}">
+      <view class="label">我的管理师</view>
+      <view class="arrow">⟩</view>
+    </view>
+    
+    <view class="list-item" bindtap="viewTrainerInfo" wx:if="{{hasTrainer}}">
+      <view class="label">我的管理师</view>
       <view class="value">
-        <text>填写/更新</text>
-        <text class="arrow">⟩</text>
+        <text class="trainer-name">{{trainerInfo.name}}</text>
+        <!-- 删除箭头 -->
       </view>
     </view>
   </view>
-
-  <!-- 退出登录 -->
+  
+  <!-- 退出登录按钮 -->
   <view class="footer">
-    <view class="logout-btn" bindtap="handleLogout">退出登录</view>
+    <view class="logout-btn" bindtap="handleLogout">退出</view>
   </view>
 </view>

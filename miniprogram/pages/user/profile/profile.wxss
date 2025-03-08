@@ -1,253 +1,179 @@
+/* 容器基础样式 - 整个页面的主容器 */
 .container {
-  min-height: 100vh;
-  background: #f7f7f7;
-  padding-bottom: env(safe-area-inset-bottom);
-  width: 100%;
-  box-sizing: border-box;
+  min-height: 100vh; /* 最小高度为视口高度 */
+  background: #f7f7f7; /* 浅灰色背景 */
+  width: 100%; /* 宽度100% */
+  box-sizing: border-box; /* 边框和内边距计入宽度 */
+  padding-top: 200rpx; /* 减小顶部间距，从210rpx改为160rpx */
+  padding-bottom: 200rpx; /* 底部间距，为退出按钮留出空间 */
 }
 
-.user-info {
-  background: #fff;
-  padding: 40rpx;
-  display: flex;
-  align-items: center;
-  margin-bottom: 20rpx;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.avatar {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 60rpx;
-  margin-right: 30rpx;
-}
-
-.nickname {
-  font-size: 36rpx;
-  color: #333;
-  font-weight: 500;
-}
-
-/* 新增管理师信息区域样式 */
-.trainer-info {
-  background: #fff;
-  padding: 30rpx;
-  margin-bottom: 20rpx;
-  border-radius: 8rpx;
-}
-
-.trainer-header {
-  display: flex;
-  align-items: center;  /* 移除 justify-content */
-  margin-bottom: 20rpx;
-}
-
-.trainer-title {
-  font-size: 32rpx;
-  color: #333;
-  font-weight: 500;
-}
-
-.no-trainer {
-  color: #999;
-  font-size: 28rpx;
-  text-align: left;     /* 改为左对齐 */
-  padding: 20rpx 0;
-}
-
-.scan-link {
-  color: #07c160;       /* 添加链接颜色 */
-  display: inline;      /* 使其成为内联元素 */
-}
-
-.trainer-content {
-  display: flex;
-  align-items: center;
-}
-
-.trainer-avatar {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 40rpx;
-  margin-right: 20rpx;
-}
-
-.trainer-info-right {
-  flex: 1;
-}
-
-.trainer-name {
-  font-size: 30rpx;
-  color: #333;
-  margin-bottom: 6rpx;
-}
-
-.trainer-desc {
-  font-size: 24rpx;
-  color: #999;
-}
-
-.no-trainer {
-  color: #999;
-  font-size: 28rpx;
-  text-align: center;
-  padding: 30rpx 0;
-}
-
-.section {
-  background: #fff;
-  margin-bottom: 20rpx;
-}
-
-.section-title {
-  padding: 30rpx;
-  font-size: 32rpx;
-  color: #999;
-}
-
-.list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30rpx;
-  border-bottom: 1rpx solid #eee;
-}
-
-/* 可以为历史记录入口添加特殊样式，如果需要的话 */
-.history-item {
-  color: #333;
-}
-
-.list-item:last-child {
-  border-bottom: none;
-}
-
-.label {
-  font-size: 32rpx;
-  color: #333;
-}
-
-.value {
-  display: flex;
-  align-items: center;
-  color: #999;
-  font-size: 32rpx;
-}
-
-.arrow {
-  margin-left: 10rpx;
-  color: #ccc;
-}
-
-/* 确保所有主要容器都占满屏幕宽度 */
-.trainer-info,
-.section,
-.footer {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* 调整列表项样式 */
-.list-item {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 30rpx;
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1rpx solid #eee;
-}
-
-/* 调整按钮容器样式 */
-.footer {
-  padding: 40rpx;
-  width: 100%;
-  box-sizing: border-box;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background: #f7f7f7;
-  z-index: 100;
-  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
-}
-
-.logout-btn {
-  width: 100%;
-  height: 88rpx;
-  line-height: 88rpx;
-  background: #f2f2f2;  /* 修改为灰色背景 */
-  color: #999;       /* 修改为红色文字 */
-  font-size: 32rpx;
-  border-radius: 8rpx;
-  text-align: center;
-}
-
-
-/* 添加自定义导航栏样式 */
+/* 自定义导航栏样式 - 固定在页面顶部 */
 .custom-nav-bar {
-  position: fixed;
+  position: fixed; /* 固定定位 */
   top: 0;
   left: 0;
   right: 0;
-  height: 44px;
-  background-color: #ffffff;
+  height: 110rpx; /* 增加导航栏高度，包含状态栏 */
+  background-color: #ffffff; /* 白色背景 */
   display: flex;
   align-items: center;
-  z-index: 1000;
-  padding-left: 16px;
-  padding-right: 16px;
+  z-index: 1000; /* 确保导航栏在最上层 */
+  padding-left: 32rpx; 
+  padding-right: 32rpx;
+  padding-top: 80rpx; /* 为状态栏留出空间 */
+  border-bottom: 0rpx solid #f5f5f5;
 }
 
+/* 导航栏左侧按钮区域 */
 .nav-left {
-  width: 30px;
-  height: 30px;
+  width: 60rpx; /* 从30px改为60rpx */
+  height: 60rpx; /* 从30px改为60rpx */
   display: flex;
   align-items: center;
 }
 
+/* 关闭图标样式 */
 .close-icon {
-  width: 24px;
-  height: 24px;
+  width: 48rpx; /* 从24px改为48rpx */
+  height: 48rpx; /* 从24px改为48rpx */
   position: relative;
 }
 
+/* 关闭图标的横线 - 通过伪元素实现 */
 .close-icon::before,
 .close-icon::after {
   content: '';
   position: absolute;
-  width: 24px;
-  height: 2px;
+  width: 38rpx; /* 从24px改为48rpx */
+  height: 4rpx; /* 从2px改为4rpx */
   background-color: #333;
   top: 50%;
   left: 0;
 }
 
+/* 关闭图标的第一条线 - 45度旋转 */
 .close-icon::before {
   transform: rotate(45deg);
 }
 
+/* 关闭图标的第二条线 - -45度旋转 */
 .close-icon::after {
   transform: rotate(-45deg);
 }
 
+/* 导航栏标题样式 */
 .nav-title {
-  flex: 1;
+  flex: 1; /* 占据剩余空间 */
   text-align: center;
   font-size: 17px;
   font-weight: 500;
   color: #333333;
 }
 
-/* 修改容器样式，删除重复定义 */
-.container {
-  padding-top: 170rpx; /* 固定值替代计算值 */
-  min-height: 100vh;
-  background: #f7f7f7;
-  padding-bottom: env(safe-area-inset-bottom);
+/* 用户信息容器 - 放置在标题栏与列表之间 */
+.user-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0; /* 减小内边距，从40rpx改为30rpx */
+  background: #fff;
+  margin-bottom: 20rpx;
+  margin-top: -20rpx; /* 添加负的上边距，使容器向上移动 */
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 其他样式保持不变 */
+/* 用户头像样式 */
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 用户名称样式 */
+.user-nickname {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 列表区域样式 - 功能列表的容器 */
+.list-section {
+  background: #fff;
+  margin-bottom: 20rpx; /* 底部外边距 */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 列表项样式 - 每个功能选项 */
+.list-item {
+  display: flex;
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 确保垂直居中 */
+  padding: 30rpx 40rpx; /* 统一内边距 */
+  border-bottom: 1rpx solid #f5f5f5; /* 底部边框 */
+  width: 100%;
+  box-sizing: border-box;
+  height: 120rpx; /* 固定高度确保一致性 */
+}
+
+/* 列表项标签样式 - 左侧文字 */
+.label {
+  font-size: 32rpx;
+  color: #333;
+  display: flex;
+  align-items: center; /* 确保文字垂直居中 */
+  height: 100%; /* 占满父元素高度 */
+}
+
+/* 列表项值样式 - 右侧内容 */
+.value {
+  display: flex;
+  align-items: center; /* 确保内容垂直居中 */
+  color: #999; /* 灰色文字 */
+  font-size: 32rpx;
+  height: 100%; /* 占满父元素高度 */
+}
+
+/* 箭头样式 - 指示可点击 */
+.arrow {
+  color: #cccccc; /* 浅灰色 */
+  font-size: 32rpx;
+  display: flex;
+  align-items: center; /* 确保箭头垂直居中 */
+  height: 100%; /* 占满父元素高度 */
+}
+
+/* 管理师名称样式 - 不需要箭头 */
+.trainer-name {
+  color: #999;
+}
+
+/* 底部区域样式 - 放置退出按钮 */
+.footer {
+  padding: 40rpx;
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed; /* 固定在底部 */
+  bottom: 0;
+  left: 0;
+  background: #f7f7f7; /* 与页面背景一致 */
+  z-index: 100;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); /* 适配底部安全区域 */
+}
+
+/* 退出登录按钮样式 */
+.logout-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx; /* 文字垂直居中 */
+  background: #ffffff; /* 白色背景 */
+  color: #999; /* 灰色文字 */
+  font-size: 32rpx;
+  border-radius: 20rpx; /* 圆角 */
+  text-align: center;
+  box-shadow: 0 0rpx 0rpx rgba(0,0,0,0.05); /* 轻微阴影 */
+}

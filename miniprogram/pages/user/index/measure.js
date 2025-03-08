@@ -35,31 +35,61 @@ Page({
     selectedDevice: null
   },
 
-  onLoad: function() {
+  onLoad: function(options) {
+    console.log('页面加载');
+    
     // 检查用户是否已完成注册
-    const userService = require('../../../services/user');
-    userService.checkUserRegistration().then(registered => {
-      if (!registered) {
-        wx.showModal({
-          title: '完善资料',
-          content: '请先完善您的个人资料，以便获得更准确的测量结果',
-          showCancel: false,
-          success: () => {
-            userService.redirectToRegister();
-          }
-        });
-      } else {
-        // 用户已注册，继续加载页面
-        // 修改这里，直接调用相关函数而不是不存在的loadPageData
-        console.log('页面加载');
+    const hasCompletedRegistration = wx.getStorageSync('hasCompletedRegistration');
+    const userProfile = wx.getStorageSync('userProfile');
+    
+    if (!hasCompletedRegistration || !userProfile) {
+      // 如果用户未完成注册，重定向到登录页面
+      wx.reLaunch({
+        url: '/pages/user/auth/login'
+      });
+      return;
+    }
+    
+    // 加载本地用户信息，不依赖网络请求
+    this.loadLocalUserInfo();
+    
+    // 确保用户已登录，但不阻塞页面加载
+    // 使用已导入的userService模块，避免重复导入
+    userService.ensureLogin()
+      .then(() => {
+        console.log('用户已登录，开始同步数据');
+        // 尝试从服务器获取最新用户信息，但失败时不影响主流程
         this.loadUserInfo();
         
         // 添加同步重试机制
         setTimeout(() => {
           this.syncLocalData();
         }, 1000);
-      }
-    });
+      })
+      .catch(err => {
+        console.error('登录检查失败，使用本地数据:', err);
+        // 即使登录检查失败，也尝试同步本地数据
+        setTimeout(() => {
+          this.syncLocalData();
+        }, 1000);
+      });
+  },
+
+  // 加载本地用户信息，不依赖网络
+  loadLocalUserInfo: function() {
+    const userInfo = wx.getStorageSync('userInfo');
+    if (userInfo) {
+      this.setData({ userInfo });
+    } else {
+      // 设置默认用户信息
+      this.setData({
+        userInfo: {
+          nickName: '未登录用户',
+          avatarUrl: '',
+          gender: 0
+        }
+      });
+    }
   },
 
   // 同步本地数据
@@ -72,6 +102,11 @@ Page({
           console.log('数据同步完成');
         }).catch(err => {
           console.error('数据同步失败:', err);
+          // 添加重试机制
+          setTimeout(() => {
+            console.log('尝试重新同步数据');
+            this.syncLocalData();
+          }, 5000); // 5秒后重试
         });
       } else {
         console.log('同步完成（非Promise返回）');

@@ -1,8 +1,0 @@
-<view class="container">
-  <!-- 删除左上角按钮相关代码 -->
-  
-  <!-- 保留其他内容 -->
-  <view class="measure-content">
-    <!-- ... 其他内容 ... -->
-  </view>
-</view>

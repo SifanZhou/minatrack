@@ -35,7 +35,7 @@ page {
 /* 体重数值样式 */
 /* 微调：可通过调整 font-size 和 font-weight 来改变数字大小和粗细 */
 .weight {
-  font-size: 80rpx; /* 文字大小 */
+  font-size: 60rpx; /* 文字大小 */
   color: #333; /* 文字颜色 */
   font-weight: 200; /* 文字粗细 */
   display: flex; /* 使用弹性布局 */

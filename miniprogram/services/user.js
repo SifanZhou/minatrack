@@ -110,7 +110,7 @@ const userService = {
     });
   },
 
-  // 静默更新用户信息的其余部分保持不变
+  // 静默更新用户信息
   silentUpdateUserInfo: function(page) {
     wx.getNetworkType({
       success: (res) => {
@@ -127,6 +127,101 @@ const userService = {
             });
         }
       }
+    });
+  },
+
+  // 确保用户已登录
+  ensureLogin: function(page, callback) {
+    return new Promise((resolve, reject) => {
+      // 检查本地存储中是否有用户数据
+      const userData = wx.getStorageSync('userData');
+      const userProfile = wx.getStorageSync('userProfile');
+      const hasCompletedRegistration = wx.getStorageSync('hasCompletedRegistration');
+      
+      try {
+        // 使用新的API组合替代已弃用的wx.getSystemInfoSync
+        const appBaseInfo = wx.getAppBaseInfo();
+        const isDevTools = appBaseInfo.platform === 'devtools';
+        
+        if (userData && userProfile && hasCompletedRegistration) {
+          // 已有用户数据，直接使用本地数据
+          console.log('用户已登录，检查完成');
+          if (callback) callback();
+          resolve(userData);
+          
+          // 在后台尝试刷新用户信息，但不阻塞主流程
+          // 增加错误处理和重试机制
+          if (!isDevTools) {
+            // 使用Promise方式调用，避免未捕获的异常
+            this.refreshUserDataSilently()
+              .catch(err => {
+                console.error('静默刷新用户数据失败:', err);
+                // 设置延迟重试
+                setTimeout(() => {
+                  this.refreshUserDataSilently()
+                    .catch(e => console.error('重试刷新用户数据失败:', e));
+                }, 3000);
+              });
+          } else {
+            console.log('开发者工具环境，跳过数据刷新');
+          }
+        } else {
+          // 没有用户数据，需要重新登录
+          console.error('用户未登录或注册未完成');
+          reject(new Error('用户未登录或注册未完成'));
+        }
+      } catch (e) {
+        console.error('检查登录状态失败:', e);
+        // 出错时，尝试使用本地数据
+        if (userData && userProfile && hasCompletedRegistration) {
+          if (callback) callback();
+          resolve(userData);
+        } else {
+          reject(new Error('用户未登录或注册未完成'));
+        }
+      }
+    });
+  },
+
+  // 静默刷新用户数据
+  refreshUserDataSilently: function() {
+    return new Promise((resolve, reject) => {
+      wx.getNetworkType({
+        success: (res) => {
+          if (res.networkType !== 'none') {
+            console.log('尝试静默刷新用户数据');
+            api.user.getUserInfo()
+              .then(userInfo => {
+                if (userInfo && Object.keys(userInfo).length > 0) {
+                  wx.setStorageSync('userInfo', userInfo);
+                  if (userInfo.profile) {
+                    wx.setStorageSync('userProfile', userInfo.profile);
+                  }
+                  console.log('用户数据静默刷新成功');
+                  resolve(userInfo);
+                } else {
+                  console.log('获取到的用户数据为空');
+                  resolve(null);
+                }
+              })
+              .catch((err) => {
+                console.log('静默刷新用户数据失败，继续使用本地数据', err);
+                // 失败时不做任何处理，继续使用本地数据
+                resolve(null);
+              });
+          } else {
+            console.log('无网络连接，跳过数据刷新');
+            resolve(null);
+          }
+        },
+        fail: (err) => {
+          console.error('获取网络状态失败:', err);
+          resolve(null);
+        }
+      });
+    }).catch(err => {
+      console.error('刷新用户数据过程中发生未捕获的错误:', err);
+      return null;
     });
   },
 
@@ -172,12 +267,20 @@ const userService = {
       });
     });
   },
-
+  
   // 重定向到注册页面
   redirectToRegister: function() {
     wx.redirectTo({
       url: '/pages/user/auth/register'
     });
+  },
+  
+  // 设置用户已完成注册
+  setRegistrationCompleted: function(userProfile) {
+    // 保存用户资料到本地
+    wx.setStorageSync('userProfile', userProfile);
+    // 设置注册完成标记
+    wx.setStorageSync('hasCompletedRegistration', true);
   }
 };
 
