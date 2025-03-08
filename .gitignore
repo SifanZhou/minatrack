@@ -7,6 +7,7 @@ project.private.config.json
 # 开发工具配置
 .idea/
 .vscode/
+.project/
 
 # 临时文件
 *.log
