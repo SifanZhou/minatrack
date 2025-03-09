@@ -1,0 +1,114 @@
+/* pages/user/binding/binding.wxss */
+.container {
+  padding: 30rpx;
+  min-height: 100vh;
+  background-color: #f8f8f8;
+}
+
+.header {
+  margin-bottom: 300rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60rpx 0;
+}
+
+.loading-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 20rpx;
+  border: 6rpx solid #f3f3f3;
+  border-top: 6rpx solid #07C160;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.specialist-info {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 140rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 80rpx;
+  margin-bottom: 60rpx;
+}
+
+.name {
+  font-size: 42rpx;
+  font-weight: bold;
+  margin-bottom: 50rpx;
+}
+
+.tips {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 120rpx;
+  text-align: center;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btn-cancel, .btn-confirm {
+  width: 45%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 14rpx;
+}
+
+.btn-cancel {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.btn-confirm {
+  background-color: #07C160;
+  color: #fff;
+}
+
+.success-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.success-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin: 30rpx 0 20rpx;
+}
+
+.success-desc {
+  font-size: 28rpx;
+  color: #666;
+}

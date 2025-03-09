@@ -136,6 +136,7 @@
   color: #999; /* 灰色文字 */
   font-size: 32rpx;
   height: 100%; /* 占满父元素高度 */
+  margin-left: auto; /* 添加这一行，使内容靠右 */
 }
 
 /* 箭头样式 - 指示可点击 */
@@ -145,11 +146,6 @@
   display: flex;
   align-items: center; /* 确保箭头垂直居中 */
   height: 100%; /* 占满父元素高度 */
-}
-
-/* 管理师名称样式 - 不需要箭头 */
-.trainer-name {
-  color: #999;
 }
 
 /* 底部区域样式 - 放置退出按钮 */
@@ -176,4 +172,60 @@
   border-radius: 20rpx; /* 圆角 */
   text-align: center;
   box-shadow: 0 0rpx 0rpx rgba(0,0,0,0.05); /* 轻微阴影 */
+}
+
+/* 添加开发测试区域样式 */
+.dev-title {
+  font-size: 24rpx;
+  color: #999;
+  padding: 20rpx 30rpx 10rpx;
+}
+
+.value {
+  display: flex;
+  align-items: center;
+}
+
+/* 管理师相关样式调整 */
+.specialist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  width: 100%;
+  box-sizing: border-box;
+  height: 120rpx;
+}
+
+/* 管理师头像样式 */
+.specialist-avatar {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+  vertical-align: middle;
+}
+
+/* 管理师信息区域 */
+.specialist-info {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* 使内容靠右 */
+}
+
+.specialist-name {
+  color: #999;
+  font-size: 32rpx;
+}
+
+/* 解绑按钮样式优化 */
+.unbind-btn {
+  color: #ff4d4f;
+  font-size: 24rpx;
+  margin-left: 20rpx;
+  padding: 6rpx 16rpx;
+  border: 0rpx solid #ff4d4f;
+  border-radius: 10rpx;
+  background-color: rgba(255, 77, 79, 0.05);
 }

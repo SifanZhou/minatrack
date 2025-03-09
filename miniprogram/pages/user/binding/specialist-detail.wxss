@@ -1,0 +1,166 @@
+/* pages/user/binding/specialist-detail.wxss */
+.container {
+  min-height: 100vh;
+  background: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 180rpx;
+  padding-bottom: 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 自定义导航栏 */
+.custom-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 110rpx;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  padding-top: 80rpx;
+  border-bottom: 0rpx solid #f5f5f5;
+}
+
+.nav-left {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-icon {
+  width: 32rpx;
+  height: 32rpx;
+  position: relative;
+}
+
+.close-icon::before,
+.close-icon::after {
+  content: '';
+  position: absolute;
+  width: 32rpx;
+  height: 2rpx;
+  background-color: #333;
+  top: 15rpx;
+}
+
+.close-icon::before {
+  transform: rotate(45deg);
+}
+
+.close-icon::after {
+  transform: rotate(-45deg);
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+/* 加载中样式 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400rpx;
+}
+
+.loading {
+  width: 60rpx;
+  height: 60rpx;
+  border: 6rpx solid #f3f3f3;
+  border-top: 6rpx solid #07C160;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 管理师简化信息样式 */
+.specialist-simple-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 340rpx 40rpx;
+  flex: 1;
+}
+
+.specialist-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 80rpx;
+  margin-bottom: 30rpx;
+}
+
+.specialist-name {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.specialist-tips {
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  margin-top: 40rpx;
+}
+
+/* 按钮样式 */
+.action-buttons {
+  padding: 0 40rpx 60rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bind-button {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #07C160;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 12rpx;
+  text-align: center;
+}
+
+/* 错误提示样式 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400rpx;
+  padding: 0 60rpx;
+}
+
+.error-message {
+  font-size: 32rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+.retry-button {
+  width: 240rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #f5f5f5;
+  color: #666;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+  text-align: center;
+}

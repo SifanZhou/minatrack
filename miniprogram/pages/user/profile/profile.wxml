@@ -33,17 +33,35 @@
   
   <!-- 第二个列表区域 - 管理师信息 -->
   <view class="list-section">
-    <view class="list-item" bindtap="bindTrainer" wx:if="{{!hasTrainer}}">
+    <!-- 我的管理师部分 - 已绑定状态 -->
+    <view class="list-item" wx:if="{{hasSpecialist}}">
       <view class="label">我的管理师</view>
-      <view class="arrow">⟩</view>
+      <view class="specialist-info">
+        <image class="specialist-avatar" src="{{specialistAvatar}}" mode="aspectFill"></image>
+        <text class="specialist-name">{{specialistName}}</text>
+        <text class="unbind-btn" catchtap="unbindTrainer">解绑</text>
+      </view>
+      <!-- 已移除箭头 -->
     </view>
     
-    <view class="list-item" bindtap="viewTrainerInfo" wx:if="{{hasTrainer}}">
+    <!-- 未绑定状态 - 移除箭头 -->
+    <view class="list-item" wx:if="{{!hasSpecialist}}" bindtap="bindSpecialist">
       <view class="label">我的管理师</view>
-      <view class="value">
-        <text class="trainer-name">{{trainerInfo.name}}</text>
-        <!-- 删除箭头 -->
-      </view>
+      <view class="value">扫码绑定管理师</view>
+      <!-- 移除这里的箭头 -->
+    </view>
+  </view>
+
+  <!-- 开发测试区域 -->
+  <view class="list-section" wx:if="{{isDevMode}}">
+    <view class="dev-title">开发测试区</view>
+    <view class="list-item" bindtap="testBindWithCode">
+      <view class="label">测试绑定(输入邀请码)</view>
+      <view class="arrow">⟩</view>
+    </view>
+    <view class="list-item" bindtap="testBindWithMockData">
+      <view class="label">测试绑定(模拟数据)</view>
+      <view class="arrow">⟩</view>
     </view>
   </view>
   

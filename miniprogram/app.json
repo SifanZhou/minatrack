@@ -8,7 +8,8 @@
     "pages/user/index/history",
     "pages/user/index/measure",
     "pages/user/index/report",
-    "pages/user/binding/invite",
+    "pages/user/binding/binding",
+    "pages/user/binding/specialist-detail",
     
     "pages/specialist/auth/login",
     "pages/specialist/index/userlist",

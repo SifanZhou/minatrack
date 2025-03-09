@@ -1,0 +1,33 @@
+<!-- pages/user/binding/specialist-detail.wxml -->
+<view class="container">
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav-bar">
+    <view class="nav-left" bindtap="handleClose">
+      <view class="close-icon"></view>
+    </view>
+    <view class="nav-title"></view>
+  </view>
+  
+  <!-- 加载中提示 -->
+  <view class="loading-container" wx:if="{{isLoading}}">
+    <view class="loading"></view>
+  </view>
+  
+  <!-- 管理师简化信息 -->
+  <view class="specialist-simple-container" wx:if="{{!isLoading && specialistInfo}}">
+    <image class="specialist-avatar" src="{{specialistInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+    <view class="specialist-name">{{specialistInfo.name}}</view>
+    <view class="specialist-tips">确认绑定该管理师为您提供健康管理服务吗？</view>
+  </view>
+  
+  <!-- 确认绑定按钮 -->
+  <view class="action-buttons" wx:if="{{!isLoading && specialistInfo}}">
+    <button class="bind-button" bindtap="confirmBind">确认绑定</button>
+  </view>
+  
+  <!-- 错误提示 -->
+  <view class="error-container" wx:if="{{!isLoading && !specialistInfo}}">
+    <view class="error-message">获取管理师信息失败</view>
+    <button class="retry-button" bindtap="handleClose">返回</button>
+  </view>
+</view>

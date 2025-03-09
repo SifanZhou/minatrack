@@ -1,0 +1,31 @@
+<!-- pages/user/binding/binding.wxml -->
+<view class="container">
+  <view class="header">
+    <view class="title">绑定管理师</view>
+  </view>
+
+  <view class="loading" wx:if="{{isLoading}}">
+    <view class="loading-icon"></view>
+    <text>正在获取管理师信息...</text>
+  </view>
+
+  <!-- 专家信息视图 - 不管是否绑定成功都显示 -->
+  <view class="specialist-info" wx:if="{{!isLoading && specialistInfo}}">
+    <image class="avatar" src="{{specialistAvatar}}"></image>
+    <view class="name">{{specialistName}}</view>
+    <view class="tips">确认绑定该管理师为您提供健康管理服务？</view>
+    
+    <view class="action-buttons">
+      <button class="btn-cancel" bindtap="cancelBind">取消</button>
+      <button class="btn-confirm" bindtap="confirmBind" disabled="{{bindingComplete}}">
+        {{bindingComplete ? '已绑定' : '确认绑定'}}
+      </button>
+    </view>
+  </view>
+  
+  <!-- 错误提示 -->
+  <view class="error-container" wx:if="{{!isLoading && !specialistInfo}}">
+    <view class="error-message">{{errorMessage || '获取管理师信息失败'}}</view>
+    <button class="retry-button" bindtap="goBack">返回</button>
+  </view>
+</view>
