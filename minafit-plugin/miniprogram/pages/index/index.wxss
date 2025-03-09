@@ -1,0 +1,114 @@
+.container {
+  padding: 20rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.header {
+  text-align: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #eee;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.section {
+  margin-bottom: 40rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  color: #333;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.button-group button {
+  width: 48%;
+}
+
+.device-list {
+  margin-top: 20rpx;
+}
+
+.device-item {
+  padding: 20rpx;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  margin-bottom: 16rpx;
+  background-color: #f9f9f9;
+}
+
+.device-item:active {
+  background-color: #f0f0f0;
+}
+
+.device-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  color: #333;
+}
+
+.device-id, .device-rssi {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 6rpx;
+}
+
+.no-device {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.data-panel {
+  margin-top: 30rpx;
+}
+
+.data-group {
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+}
+
+.data-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+  color: #333;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 10rpx;
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+  font-size: 26rpx;
+}
+
+.data-label {
+  color: #666;
+}
+
+.data-value {
+  font-weight: bold;
+  color: #333;
+}

@@ -31,6 +31,13 @@
         <view class="data-item" wx:if="{{report.bmi}}">
           <text class="label">BMI</text>
           <text class="value">{{report.bmi}}</text>
+          <text class="level" wx:if="{{report.weightLevel}}">({{report.weightLevel}})</text>
+        </view>
+        
+        <view class="data-item" wx:if="{{report.bodyFat}}">
+          <text class="label">体脂率</text>
+          <text class="value">{{report.bodyFat}}%</text>
+          <text class="level" wx:if="{{report.bodyFatLevel}}">({{report.bodyFatLevel}})</text>
         </view>
         
         <view class="data-item" wx:if="{{report.muscle}}">
@@ -49,6 +56,26 @@
         </view>
       </view>
 
+      <!-- 评估建议区域 -->
+      <view class="assessment-section" wx:if="{{report.weightSuggestion || report.bodyFatSuggestion || report.overallSuggestion}}">
+        <view class="section-title">评估建议</view>
+        
+        <view class="suggestion-item" wx:if="{{report.weightSuggestion}}">
+          <text class="suggestion-title">体重评估：</text>
+          <text class="suggestion-content">{{report.weightSuggestion}}</text>
+        </view>
+        
+        <view class="suggestion-item" wx:if="{{report.bodyFatSuggestion}}">
+          <text class="suggestion-title">体脂评估：</text>
+          <text class="suggestion-content">{{report.bodyFatSuggestion}}</text>
+        </view>
+        
+        <view class="suggestion-item" wx:if="{{report.overallSuggestion}}">
+          <text class="suggestion-title">综合建议：</text>
+          <text class="suggestion-content">{{report.overallSuggestion}}</text>
+        </view>
+      </view>
+      
       <!-- 备注区域 -->
       <view class="note-section" wx:if="{{report.note}}">
         <view class="section-title">备注</view>

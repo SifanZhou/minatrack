@@ -14,7 +14,45 @@
     </view>
   </view>
 
-  <!-- 其余部分保持不变 -->
+  <!-- 设备选择弹窗 -->
+  <view class="device-list-container" wx:if="{{showDeviceList}}">
+    <view class="device-list-mask"></view>
+    <view class="device-list-panel">
+      <view class="device-list-header">
+        <text class="device-list-title">选择设备</text>
+        <view class="device-list-close" bindtap="cancelDeviceSelection">×</view>
+      </view>
+      
+      <view class="device-list-content">
+        <view class="device-list-loading" wx:if="{{searching}}">
+          <view class="loading-icon"></view>
+          <text>搜索中...</text>
+        </view>
+        
+        <view class="device-list-empty" wx:elif="{{devices.length === 0}}">
+          <text>未找到设备</text>
+          <text class="device-list-tip">请确保体脂秤已开启</text>
+        </view>
+        
+        <view class="device-list-items" wx:else>
+          <view class="device-item" 
+                wx:for="{{devices}}" 
+                wx:key="deviceId" 
+                bindtap="selectDevice" 
+                data-id="{{item.deviceId}}">
+            <view class="device-icon"></view>
+            <view class="device-info">
+              <text class="device-name">{{item.name || '未命名设备'}}</text>
+              <text class="device-id">{{item.deviceId}}</text>
+            </view>
+            <view class="device-select {{selectedDevice === item.deviceId ? 'selected' : ''}}"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 体重显示部分 -->
   <view class="weight-section">
     <view class="weight-display">
       <text class="weight-number">{{weight}}</text>

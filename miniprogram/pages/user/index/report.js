@@ -39,9 +39,33 @@ Page({
     }).then(res => {
       const { data } = res.result;
       if (data) {
+        // 处理报告数据，优先使用reportData中的完整报告数据
+        let reportData = data;
+        
+        // 如果存在完整的体脂秤报告数据，则使用它
+        if (data.reportData) {
+          reportData = {
+            ...data,
+            // 从reportData中提取关键数据
+            weight: data.weight || data.reportData.weightAssessment.weight,
+            bmi: data.bmi || data.reportData.weightAssessment.bmi,
+            bodyFat: data.bodyFat || data.reportData.bodyComposition.bodyFat.value,
+            muscle: data.muscle || data.reportData.bodyComposition.muscleMass.value,
+            water: data.water || data.reportData.bodyComposition.bodyWater.value,
+            bone: data.bone || data.reportData.bodyComposition.boneMass.value,
+            // 添加评估和建议信息
+            weightLevel: data.reportData.weightAssessment.level,
+            weightSuggestion: data.reportData.weightAssessment.suggestion,
+            bodyFatLevel: data.reportData.bodyComposition.bodyFat.level,
+            bodyFatSuggestion: data.reportData.bodyComposition.bodyFat.suggestion,
+            overallLevel: data.reportData.overallAssessment?.level,
+            overallSuggestion: data.reportData.overallAssessment?.suggestion
+          };
+        }
+        
         this.setData({
           report: {
-            ...data,
+            ...reportData,
             createdAt: this.formatDate(new Date(data.createdAt))
           },
           loading: false

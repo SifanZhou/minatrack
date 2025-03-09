@@ -157,6 +157,38 @@ Page({
   handleConnect: function() {
     console.log('按钮被点击');
     measureService.handleConnect(this);
+  },
+  
+  // 选择设备处理
+  selectDevice: function(e) {
+    const deviceId = e.currentTarget.dataset.id;
+    console.log('选择设备:', deviceId);
+    
+    this.setData({
+      selectedDevice: deviceId
+    });
+    
+    // 连接选中的设备
+    measureService.connectSelectedDevice(this, deviceId);
+    
+    // 设置数据更新监听
+    measureService.handleDataUpdate(this);
+  },
+  
+  // 取消设备选择
+  cancelDeviceSelection: function() {
+    console.log('取消设备选择');
+    
+    // 停止扫描
+    measureService.stopScan();
+    
+    this.setData({
+      showDeviceList: false,
+      isMeasuring: false,
+      buttonText: '连接体脂秤',
+      hintText: '请光脚上秤',
+      status: ''
+    });
   }
   
   // 移除了重复的 animateWeight 和 saveMeasurement 方法，这些已经在 measureService 中实现

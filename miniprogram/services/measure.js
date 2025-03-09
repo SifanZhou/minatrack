@@ -3,7 +3,168 @@ const api = require('./api');
 const storage = require('./storage');
 const LOCAL_MEASUREMENTS_KEY = 'local_measurements';
 
+// 引入体脂秤插件
+const plugin = requirePlugin('vtble-plugin');
+
+// 定义数据结构
+const WeightData = {
+  weight: 0,
+  timestamp: 0
+};
+
+const BodyData = {
+  bodyFat: 0,
+  muscleMass: 0,
+  visceralFat: 0,
+  bmr: 0,
+  bodyWater: 0,
+  boneMass: 0,
+  timestamp: 0
+};
+
+const HRData = {
+  hr: 0,
+  timestamp: 0
+};
+
 const measureService = {
+  // 插件相关数据
+  pluginData: {
+    weightData: null,
+    bodyData: null,
+    hrData: null,
+    initialized: false
+  },
+  
+  // 初始化SDK
+  initSDK: function() {
+    if (this.pluginData.initialized) {
+      return Promise.resolve();
+    }
+    
+    return new Promise((resolve, reject) => {
+      try {
+        // 初始化SDK - 实际应用中应该使用正确的密钥
+        plugin.initSDK('minatrack_sdk_key')
+          .then(() => {
+            console.log('体脂秤SDK初始化成功');
+            this.setupListeners();
+            this.pluginData.initialized = true;
+            resolve();
+          })
+          .catch(error => {
+            console.error('体脂秤SDK初始化失败', error);
+            reject(error);
+          });
+      } catch (error) {
+        console.error('SDK初始化过程出错', error);
+        reject(error);
+      }
+    });
+  },
+  
+  // 设置数据监听
+  setupListeners: function() {
+    // 监听体重数据
+    plugin.onWeightData(data => {
+      this.pluginData.weightData = data;
+      console.log('接收到体重数据', data);
+    });
+    
+    // 监听体脂数据
+    plugin.onBodyData(data => {
+      this.pluginData.bodyData = data;
+      console.log('接收到体脂数据', data);
+    });
+    
+    // 监听心率数据
+    plugin.onHRData(data => {
+      this.pluginData.hrData = data;
+      console.log('接收到心率数据', data);
+    });
+  },
+  
+  // 开始扫描设备
+  startScan: function(timeout = 30) {
+    return plugin.startScan(timeout);
+  },
+  
+  // 停止扫描
+  stopScan: function() {
+    return plugin.stopScan();
+  },
+  
+  // 连接设备
+  connectDevice: function(deviceId, userInfo) {
+    return new Promise((resolve, reject) => {
+      plugin.connectDevice(deviceId)
+        .then(() => {
+          // 设置用户信息
+          return plugin.setUserInfo({
+            age: userInfo.age || 25,
+            height: userInfo.height || 170,
+            gender: userInfo.gender || 0 // 默认男性
+          });
+        })
+        .then(() => {
+          console.log('设备连接成功');
+          resolve();
+        })
+        .catch(error => {
+          console.error('设备连接失败', error);
+          reject(error);
+        });
+    });
+  },
+  
+  // 断开连接
+  disconnect: function() {
+    return plugin.disconnect();
+  },
+  
+  // 检查设备是否支持心率
+  isSupportHR: function() {
+    return plugin.isSupportHR();
+  },
+  
+  // 启用心率数据
+  enableHRData: function(seconds = 30) {
+    return plugin.enableHRData(seconds);
+  },
+  
+  // 生成测量报告
+  generateReport: function(userInfo) {
+    if (!this.pluginData.weightData || !this.pluginData.bodyData) {
+      console.error('缺少必要的测量数据，无法生成报告');
+      return null;
+    }
+    
+    try {
+      const report = plugin.generateReport(
+        this.pluginData.weightData,
+        this.pluginData.bodyData,
+        this.pluginData.hrData,
+        {
+          age: userInfo.age || 25,
+          height: userInfo.height || 170,
+          gender: userInfo.gender || 0
+        }
+      );
+      
+      return report;
+    } catch (error) {
+      console.error('生成报告失败', error);
+      return null;
+    }
+  },
+  
+  // 重置测量数据
+  resetData: function() {
+    this.pluginData.weightData = null;
+    this.pluginData.bodyData = null;
+    this.pluginData.hrData = null;
+  },
+  
   // 同步本地测量数据
   syncLocalMeasurements: function(page) {
     return new Promise((resolve, reject) => {
@@ -103,24 +264,137 @@ const measureService = {
 
     if (page.data.isMeasuring) return;
 
-    page.setData({
-      isMeasuring: true,
-      buttonText: '测量中',
-      hintText: '正在连接设备...',
-      connectError: false,
-      isHintMeasuring: false,
-      status: 'measuring'
+    // 初始化SDK
+    this.initSDK().then(() => {
+      // 设置页面状态为搜索设备
+      page.setData({
+        isMeasuring: true,
+        buttonText: '搜索设备中',
+        hintText: '正在搜索附近的体脂秤...',
+        connectError: false,
+        isHintMeasuring: false,
+        status: 'searching',
+        showDeviceList: true,
+        devices: [],
+        searching: true
+      });
+      
+      // 开始扫描设备
+      return this.startScan();
+    }).then(devices => {
+      console.log('发现设备:', devices);
+      
+      // 更新设备列表
+      page.setData({
+        devices: devices,
+        searching: false,
+        buttonText: '请选择设备',
+        hintText: devices.length > 0 ? '请选择一个设备连接' : '未找到设备，请重试'
+      });
+      
+      // 如果没有找到设备
+      if (devices.length === 0) {
+        setTimeout(() => {
+          page.setData({
+            isMeasuring: false,
+            buttonText: '重新连接',
+            hintText: '未找到设备，请重试',
+            connectError: true,
+            status: ''
+          });
+        }, 2000);
+      }
+    }).catch(error => {
+      console.error('设备搜索失败:', error);
+      page.setData({
+        isMeasuring: false,
+        buttonText: '重新连接',
+        hintText: '连接失败，请重试',
+        connectError: true,
+        status: '',
+        searching: false,
+        showDeviceList: false
+      });
     });
-
-    this.simulateDeviceConnection(page);
+  },
+  
+  // 连接选中的设备
+  connectSelectedDevice: function(page, deviceId) {
+    // 获取用户信息
+    const userInfo = wx.getStorageSync('userInfo') || {
+      age: 25,
+      height: 170,
+      gender: 0
+    };
+    
+    page.setData({
+      buttonText: '连接中',
+      hintText: '正在连接设备...',
+      showDeviceList: false
+    });
+    
+    this.connectDevice(deviceId, userInfo)
+      .then(() => {
+        // 连接成功
+        page.setData({
+          hintText: '请站稳，开始测量',
+          isHintMeasuring: true
+        });
+        
+        // 震动反馈
+        wx.vibrateShort({
+          type: 'medium'
+        });
+        
+        // 检查是否支持心率
+        return this.isSupportHR();
+      })
+      .then(supportHR => {
+        if (supportHR) {
+          return this.enableHRData();
+        }
+      })
+      .catch(error => {
+        console.error('设备连接失败:', error);
+        page.setData({
+          isMeasuring: false,
+          buttonText: '重新连接',
+          hintText: '连接失败，请重试',
+          connectError: true,
+          status: ''
+        });
+      });
   },
   
   // 保存测量数据
-  saveMeasurement: function(page, weight) {
+  saveMeasurement: function(page) {
     try {
+      // 获取用户信息
+      const userInfo = wx.getStorageSync('userInfo') || {
+        age: 25,
+        height: 170,
+        gender: 0
+      };
+      
+      // 生成报告
+      const report = this.generateReport(userInfo);
+      
+      if (!report || !this.pluginData.weightData) {
+        throw new Error('无法生成报告，数据不完整');
+      }
+      
+      const weight = this.pluginData.weightData.weight;
+      
+      // 构建测量数据
       const measureData = {
         weight: parseFloat(weight),
+        bodyFat: report.bodyComposition.bodyFat.value,
+        muscle: report.bodyComposition.muscleMass.value,
+        water: report.bodyComposition.bodyWater.value,
+        bone: report.bodyComposition.boneMass.value,
+        bmi: report.weightAssessment.bmi,
         measuredAt: new Date().toISOString(),
+        reportData: report // 保存完整报告数据
       };
       
       console.log('开始保存测量数据:', measureData);
@@ -145,12 +419,21 @@ const measureService = {
         measurementId: localId,
         isHintMeasuring: false,
         connectError: false,
-        status: 'ready'
+        status: 'ready',
+        weight: weight.toFixed(2)
       });
       
       wx.vibrateShort({ type: 'medium' });
       
-      this.syncToServer(page, weight, localId);
+      this.syncToServer(page, measureData, localId);
+      
+      // 断开设备连接
+      this.disconnect().catch(err => {
+        console.error('断开连接失败:', err);
+      });
+      
+      // 重置数据
+      this.resetData();
       
     } catch (err) {
       console.error('本地保存失败:', err);
@@ -168,11 +451,19 @@ const measureService = {
         icon: 'none',
         duration: 2000
       });
+      
+      // 断开设备连接
+      this.disconnect().catch(err => {
+        console.error('断开连接失败:', err);
+      });
+      
+      // 重置数据
+      this.resetData();
     }
   },
   
   // 同步到服务器
-  syncToServer: function(page, weight, localId) {
+  syncToServer: function(page, measureData, localId) {
     let isSimulator = false;
     try {
       const systemInfo = wx.getAppBaseInfo();
@@ -198,18 +489,20 @@ const measureService = {
             return;
           }
           
-          // 修改这里，使用云函数调用
+          // 使用云函数调用，传递完整的测量数据
           wx.cloud.callFunction({
             name: 'user',
             data: {
               type: 'addMeasurement',
               data: {
-                weight: parseFloat(weight),
-                bodyFat: 20.1,  // 模拟数据
-                muscle: 54.2,   // 模拟数据
-                water: 65.0,    // 模拟数据
-                bone: 3.1,      // 模拟数据
-                bmi: 22.5       // 模拟数据
+                weight: measureData.weight,
+                bodyFat: measureData.bodyFat,
+                muscle: measureData.muscle,
+                water: measureData.water,
+                bone: measureData.bone,
+                bmi: measureData.bmi,
+                reportData: measureData.reportData,
+                measuredAt: measureData.measuredAt
               }
             }
           }).then(result => {
@@ -234,79 +527,50 @@ const measureService = {
     });
   },
   
-  // 模拟设备连接
-  simulateDeviceConnection: function(page) {
-    // 模拟连接过程
-    page.setData({
-      hintText: '正在连接设备...'
-    });
-    
-    // 模拟连接延迟
-    setTimeout(() => {
-      // 模拟连接成功率 90%
-      const isConnected = Math.random() > 0.1;
+  // 处理设备数据更新
+  handleDataUpdate: function(page) {
+    // 监听体重数据更新
+    const originalOnWeightData = plugin.onWeightData;
+    plugin.onWeightData = (data) => {
+      // 调用原始监听器
+      if (typeof originalOnWeightData === 'function') {
+        originalOnWeightData(data);
+      }
       
-      if (isConnected) {
-        // 连接成功
+      // 更新页面显示
+      if (page && data && data.weight) {
         page.setData({
-          hintText: '请站稳，开始测量',
-          isHintMeasuring: true
+          weight: data.weight.toFixed(2),
+          hintText: '测量中，请保持站立'
         });
         
         // 震动反馈
         wx.vibrateShort({
-          type: 'medium',
-          success: () => console.log('震动成功'),
-          fail: (err) => console.error('震动失败', err)
+          type: 'light'
         });
-        
-        // 开始模拟测量过程
-        this.animateWeight(page);
-      } else {
-        // 连接失败
+      }
+    };
+    
+    // 监听体脂数据更新
+    const originalOnBodyData = plugin.onBodyData;
+    plugin.onBodyData = (data) => {
+      // 调用原始监听器
+      if (typeof originalOnBodyData === 'function') {
+        originalOnBodyData(data);
+      }
+      
+      // 当收到体脂数据时，表示测量完成，可以保存数据
+      if (page && data) {
         page.setData({
-          isMeasuring: false,
-          buttonText: '重新连接',
-          hintText: '连接失败，请重试',
-          connectError: true,
-          status: ''
+          hintText: '数据分析中...'
         });
-      }
-    }, 1500); // 模拟连接时间
-  },
-  
-  // 体重动画效果
-  animateWeight: function(page) {
-    let count = 0;
-    let targetWeight = 65.8;
-    let currentWeight = 0;
-    let duration = 3000;
-    let interval = 16;
-    let steps = duration / interval;
-    
-    if(page.weightTimer) {
-      clearInterval(page.weightTimer);
-    }
-    
-    page.weightTimer = setInterval(() => {
-      count++;
-      
-      if (count <= steps) {
-        let progress = count / steps;
-        let easedProgress = 1 - Math.pow(1 - progress, 3);
-        currentWeight = (targetWeight * easedProgress).toFixed(2);
-      } else {
-        currentWeight = targetWeight.toFixed(2);
-        clearInterval(page.weightTimer);
-        page.weightTimer = null;
         
-        this.saveMeasurement(page, currentWeight);
+        // 延迟一下再保存，确保所有数据都已接收
+        setTimeout(() => {
+          this.saveMeasurement(page);
+        }, 1000);
       }
-      
-      page.setData({
-        weight: currentWeight
-      });
-    }, interval);
+    };
   }
 };
 

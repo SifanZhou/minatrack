@@ -1,0 +1,67 @@
+<view class="container">
+  <view class="header">
+    <text class="title">米娜体脂秤</text>
+  </view>
+
+  <view class="section">
+    <view class="section-title">设备扫描</view>
+    <view class="button-group">
+      <button type="primary" bindtap="startScan">开始扫描</button>
+      <button bindtap="stopScan">停止扫描</button>
+    </view>
+
+    <view class="device-list" wx:if="{{devices.length > 0}}">
+      <view class="device-item" wx:for="{{devices}}" wx:key="id" bindtap="connectDevice" data-id="{{item.deviceId}}">
+        <view class="device-name">{{item.name || '未知设备'}}</view>
+        <view class="device-id">ID: {{item.deviceId}}</view>
+        <view class="device-rssi">信号强度: {{item.RSSI}} dBm</view>
+      </view>
+    </view>
+    <view class="no-device" wx:else>
+      <text>未发现设备，请点击开始扫描</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{connected}}">
+    <view class="section-title">设备已连接</view>
+    <button type="warn" bindtap="disconnect">断开连接</button>
+
+    <view class="data-panel">
+      <view class="data-group" wx:if="{{weightData}}">
+        <view class="data-title">体重数据</view>
+        <view class="data-item">
+          <text class="data-label">体重:</text>
+          <text class="data-value">{{weightData.weight}} kg</text>
+        </view>
+      </view>
+
+      <view class="data-group" wx:if="{{bodyData}}">
+        <view class="data-title">体脂数据</view>
+        <view class="data-item">
+          <text class="data-label">体脂率:</text>
+          <text class="data-value">{{bodyData.bodyFatRate}} %</text>
+        </view>
+        <view class="data-item">
+          <text class="data-label">肌肉量:</text>
+          <text class="data-value">{{bodyData.muscleMass}} kg</text>
+        </view>
+        <view class="data-item">
+          <text class="data-label">水分率:</text>
+          <text class="data-value">{{bodyData.waterRate}} %</text>
+        </view>
+        <view class="data-item">
+          <text class="data-label">BMI:</text>
+          <text class="data-value">{{bodyData.bmi}}</text>
+        </view>
+      </view>
+
+      <view class="data-group" wx:if="{{hrData}}">
+        <view class="data-title">心率数据</view>
+        <view class="data-item">
+          <text class="data-label">心率:</text>
+          <text class="data-value">{{hrData.heartRate}} bpm</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
