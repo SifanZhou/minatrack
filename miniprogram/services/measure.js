@@ -76,8 +76,46 @@ const measureService = {
     }
   },
   
+  // 初始化测量页面数据
+  initMeasurePage: function(page) {
+    if(!page.data.isMeasuring) {
+      page.setData({
+        weight: '0.00',
+        buttonText: '连接体脂秤',
+        hintText: '请光脚上秤',
+        isReportReady: false,
+        connectError: false,
+        status: ''
+      });
+    }
+  },
+  
+  // 处理连接请求
+  handleConnect: function(page) {
+    console.log('处理连接请求');
+    
+    if (page.data.isReportReady && page.data.measurementId) {
+      wx.navigateTo({
+        url: `/pages/user/index/report?id=${page.data.measurementId}&fromMeasure=true`
+      });
+      return;
+    }
+
+    if (page.data.isMeasuring) return;
+
+    page.setData({
+      isMeasuring: true,
+      buttonText: '测量中',
+      hintText: '正在连接设备...',
+      connectError: false,
+      isHintMeasuring: false,
+      status: 'measuring'
+    });
+
+    this.simulateDeviceConnection(page);
+  },
+  
   // 保存测量数据
-  // 在 saveMeasurement 函数中，添加更多日志输出
   saveMeasurement: function(page, weight) {
     try {
       const measureData = {
@@ -223,7 +261,7 @@ const measureService = {
         });
         
         // 开始模拟测量过程
-        page.animateWeight();
+        this.animateWeight(page);
       } else {
         // 连接失败
         page.setData({
@@ -262,7 +300,7 @@ const measureService = {
         clearInterval(page.weightTimer);
         page.weightTimer = null;
         
-        page.saveMeasurement(currentWeight);
+        this.saveMeasurement(page, currentWeight);
       }
       
       page.setData({

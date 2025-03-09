@@ -27,7 +27,7 @@
     
     <view class="list-item" bindtap="healthReport">
       <view class="label">健康问卷</view>
-      <view class="arrow">⟩</view>
+      <view class="arrow">即将上线</view>
     </view>
   </view>
   
@@ -47,7 +47,7 @@
     <!-- 未绑定状态 - 移除箭头 -->
     <view class="list-item" wx:if="{{!hasSpecialist}}" bindtap="bindSpecialist">
       <view class="label">我的管理师</view>
-      <view class="value">扫码绑定管理师</view>
+      <view class="value">扫码绑定</view>
       <!-- 移除这里的箭头 -->
     </view>
   </view>

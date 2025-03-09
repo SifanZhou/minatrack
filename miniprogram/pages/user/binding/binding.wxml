@@ -9,7 +9,7 @@
     <text>正在获取管理师信息...</text>
   </view>
 
-  <!-- 专家信息视图 - 不管是否绑定成功都显示 -->
+  <!-- 管理师信息视图 - 不管是否绑定成功都显示 -->
   <view class="specialist-info" wx:if="{{!isLoading && specialistInfo}}">
     <image class="avatar" src="{{specialistAvatar}}"></image>
     <view class="name">{{specialistName}}</view>

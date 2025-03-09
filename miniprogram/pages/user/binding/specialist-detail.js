@@ -2,9 +2,10 @@
 Page({
   data: {
     specialistInfo: null,
-    isLoading: true,
-    fromBinding: false, // 是否从绑定页面进入
-    inviteCode: '' // 如果从绑定页面进入，保存邀请码
+    isLoading: false,
+    fromBinding: false,
+    inviteCode: '',
+    fadeIn: false // 添加淡入动画控制变量
   },
 
   onLoad: function(options) {
@@ -23,11 +24,14 @@ Page({
       eventChannel.on('acceptSpecialistData', (data) => {
         if (data && data.specialistInfo) {
           this.setData({
-            specialistInfo: data.specialistInfo,
-            isLoading: false
+            specialistInfo: data.specialistInfo
           });
+          
+          // 添加短暂延迟后启动淡入动画
+          setTimeout(() => {
+            this.setData({ fadeIn: true });
+          }, 100);
         } else {
-          this.setData({ isLoading: false });
           wx.showToast({
             title: '获取管理师信息失败',
             icon: 'none'
@@ -39,10 +43,8 @@ Page({
   
   // 根据邀请码获取管理师信息
   fetchSpecialistByCode: function(code) {
-    wx.showLoading({ title: '加载中...' });
-    
     // 判断是否为开发模式
-    const isDevMode = true; // 可以从全局配置或app实例获取
+    const isDevMode = true;
     
     if (isDevMode) {
       // 开发模式使用模拟数据
@@ -62,13 +64,17 @@ Page({
           cases: '已服务超过200位客户'
         };
         
-        wx.hideLoading();
         this.setData({
-          specialistInfo: mockSpecialist,
-          isLoading: false
+          specialistInfo: mockSpecialist
         });
+        
+        // 添加短暂延迟后启动淡入动画
+        setTimeout(() => {
+          this.setData({ fadeIn: true });
+        }, 100);
+        
         console.log('获取管理师信息成功:', mockSpecialist);
-      }, 1000);
+      }, 300); // 减少延迟时间
     } else {
       // 生产模式调用云函数
       wx.cloud.callFunction({
@@ -78,15 +84,16 @@ Page({
           inviteCode: code
         }
       }).then(res => {
-        wx.hideLoading();
-        
         if (res.result && res.result.success && res.result.data) {
           this.setData({
-            specialistInfo: res.result.data,
-            isLoading: false
+            specialistInfo: res.result.data
           });
+          
+          // 添加短暂延迟后启动淡入动画
+          setTimeout(() => {
+            this.setData({ fadeIn: true });
+          }, 100);
         } else {
-          this.setData({ isLoading: false });
           wx.showToast({
             title: res.result?.message || '获取管理师信息失败',
             icon: 'none'
@@ -94,8 +101,6 @@ Page({
         }
       }).catch(err => {
         console.error('获取管理师信息失败:', err);
-        wx.hideLoading();
-        this.setData({ isLoading: false });
         wx.showToast({
           title: '获取管理师信息失败',
           icon: 'none'
@@ -114,6 +119,7 @@ Page({
       return;
     }
     
+    // 这里保留加载提示，因为是用户主动操作
     wx.showLoading({
       title: '绑定中...',
       mask: true

@@ -177,6 +177,7 @@ Page({
       return;
     }
     
+    // 直接跳转，不显示额外的加载提示
     wx.navigateTo({
       url: '/pages/user/binding/specialist-detail',
       success: (res) => {
@@ -270,7 +271,7 @@ Page({
   unbindTrainer: function() {
     wx.showModal({
       title: '解绑管理师',
-      content: '解绑后将可能会影响到您的服务体验，是否确认解绑？',
+      content: '解绑可能会影响管理师为您提供更好的服务体验，是否继续？',
       confirmColor: '#07C160',
       success: (res) => {
         if (res.confirm) {

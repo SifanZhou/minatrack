@@ -54,7 +54,6 @@ Page({
     this.loadLocalUserInfo();
     
     // 确保用户已登录，但不阻塞页面加载
-    // 使用已导入的userService模块，避免重复导入
     userService.ensureLogin()
       .then(() => {
         console.log('用户已登录，开始同步数据');
@@ -116,28 +115,14 @@ Page({
     }
   },
   
-  // 初始化页面数据
+  // 初始化页面数据 - 使用服务模块
   initPageData: function() {
-    if(!this.data.isMeasuring) {
-      this.setData({
-        weight: '0.00',
-        buttonText: '连接体脂秤',
-        hintText: '请光脚上秤',
-        isReportReady: false,
-        connectError: false,
-        status: ''
-      });
-    }
+    measureService.initMeasurePage(this);
   },
 
   // 加载用户信息
   loadUserInfo: function() {
     userService.loadUserInfo(this);
-  },
-  
-  // 保存测量数据
-  saveMeasurement: function(weight) {
-    measureService.saveMeasurement(this, weight);
   },
   
   // 头像点击处理
@@ -168,33 +153,11 @@ Page({
     this.handleConnect();
   },
 
-  // 连接设备处理
+  // 连接设备处理 - 使用服务模块
   handleConnect: function() {
     console.log('按钮被点击');
-    
-    if (this.data.isReportReady && this.data.measurementId) {
-      wx.navigateTo({
-        url: `/pages/user/index/report?id=${this.data.measurementId}&fromMeasure=true`
-      });
-      return;
-    }
-
-    if (this.data.isMeasuring) return;
-
-    this.setData({
-      isMeasuring: true,
-      buttonText: '测量中',
-      hintText: '正在连接',
-      connectError: false,
-      isHintMeasuring: false,
-      status: 'measuring'
-    });
-
-    measureService.simulateDeviceConnection(this);
-  },
-  
-  // 体重动画效果
-  animateWeight: function() {
-    measureService.animateWeight(this);
+    measureService.handleConnect(this);
   }
+  
+  // 移除了重复的 animateWeight 和 saveMeasurement 方法，这些已经在 measureService 中实现
 });

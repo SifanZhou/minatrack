@@ -133,7 +133,7 @@
 .value {
   display: flex;
   align-items: center; /* 确保内容垂直居中 */
-  color: #999; /* 灰色文字 */
+  color: #07C160; /* 绿色文字 */
   font-size: 32rpx;
   height: 100%; /* 占满父元素高度 */
   margin-left: auto; /* 添加这一行，使内容靠右 */
@@ -159,17 +159,19 @@
   background: #f7f7f7; /* 与页面背景一致 */
   z-index: 100;
   padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); /* 适配底部安全区域 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
 }
 
 /* 退出登录按钮样式 */
 .logout-btn {
-  width: 100%;
+  width: 50%;
   height: 88rpx;
   line-height: 88rpx; /* 文字垂直居中 */
   background: #ffffff; /* 白色背景 */
   color: #999; /* 灰色文字 */
   font-size: 32rpx;
-  border-radius: 20rpx; /* 圆角 */
+  border-radius: 50rpx; /* 圆角 */
   text-align: center;
   box-shadow: 0 0rpx 0rpx rgba(0,0,0,0.05); /* 轻微阴影 */
 }
